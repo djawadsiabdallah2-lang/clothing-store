@@ -1,62 +1,57 @@
 let cart = [];
 
 
-// =========================
+// ==========================
 // اختيار المقاس
-// =========================
+// ==========================
 
 function selectSize(button) {
 
-    // نبحث عن جميع أزرار المقاسات
-    // الموجودة في نفس المنتج
-    const sizesContainer = button.parentElement;
+    // الحصول على أزرار المقاسات
+    const sizeButtons =
+        button.parentElement.querySelectorAll("button");
 
-    const buttons = sizesContainer.querySelectorAll("button");
-
-    // إزالة الاختيار القديم
-    buttons.forEach(function (btn) {
+    // إزالة الاختيار من جميع المقاسات
+    sizeButtons.forEach(function (btn) {
         btn.classList.remove("selected");
     });
 
-    // تحديد المقاس الذي ضغط عليه المستخدم
+    // تحديد المقاس الذي ضغطنا عليه
     button.classList.add("selected");
 }
 
 
-// =========================
-// إضافة المنتج للسلة
-// =========================
+// ==========================
+// إضافة المنتج إلى السلة
+// ==========================
 
 function addProductToCart(name, price, button) {
 
     const product = button.closest(".product");
 
-    if (!product) {
-        return;
-    }
-
-    // المقاس المختار داخل نفس المنتج
     const selectedSize =
         product.querySelector(".sizes button.selected");
 
-    // إذا لم يختر المستخدم مقاسًا
+
     if (!selectedSize) {
 
-        alert("يرجى اختيار المقاس أولاً.");
+        alert("⚠️ اختر المقاس أولاً");
 
         return;
     }
 
+
     const size =
         selectedSize.textContent.trim();
+
 
     addToCart(name, price, size);
 }
 
 
-// =========================
-// إضافة إلى السلة
-// =========================
+// ==========================
+// إضافة للسلة
+// ==========================
 
 function addToCart(name, price, size) {
 
@@ -70,7 +65,6 @@ function addToCart(name, price, size) {
     });
 
 
-    // نفس المنتج + نفس المقاس
     if (existingProduct) {
 
         existingProduct.quantity++;
@@ -80,16 +74,14 @@ function addToCart(name, price, size) {
         cart.push({
 
             name: name,
-
             price: price,
-
             size: size,
-
             quantity: 1
 
         });
 
     }
+
 
     updateCart();
 
@@ -97,9 +89,9 @@ function addToCart(name, price, size) {
 }
 
 
-// =========================
+// ==========================
 // تحديث السلة
-// =========================
+// ==========================
 
 function updateCart() {
 
@@ -114,13 +106,13 @@ function updateCart() {
 
 
     let totalQuantity = 0;
+
     let totalPrice = 0;
 
 
     cartItems.innerHTML = "";
 
 
-    // السلة فارغة
     if (cart.length === 0) {
 
         cartItems.innerHTML =
@@ -214,31 +206,23 @@ function updateCart() {
 }
 
 
-// =========================
+// ==========================
 // زيادة الكمية
-// =========================
+// ==========================
 
 function increaseQuantity(index) {
 
-    if (cart[index]) {
+    cart[index].quantity++;
 
-        cart[index].quantity++;
-
-        updateCart();
-
-    }
+    updateCart();
 }
 
 
-// =========================
+// ==========================
 // إنقاص الكمية
-// =========================
+// ==========================
 
 function decreaseQuantity(index) {
-
-    if (!cart[index]) {
-        return;
-    }
 
     cart[index].quantity--;
 
@@ -254,9 +238,9 @@ function decreaseQuantity(index) {
 }
 
 
-// =========================
+// ==========================
 // حذف المنتج
-// =========================
+// ==========================
 
 function removeFromCart(index) {
 
@@ -266,9 +250,9 @@ function removeFromCart(index) {
 }
 
 
-// =========================
+// ==========================
 // فتح السلة
-// =========================
+// ==========================
 
 function openCart() {
 
@@ -283,9 +267,9 @@ function openCart() {
 }
 
 
-// =========================
+// ==========================
 // إغلاق السلة
-// =========================
+// ==========================
 
 function closeCart() {
 
