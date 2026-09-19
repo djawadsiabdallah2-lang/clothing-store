@@ -7,12 +7,16 @@ let cart = JSON.parse(localStorage.getItem("cart")) || [];
 function selectSize(button) {
 
 ```
-const sizeButtons =
+const sizes =
     button.parentElement.querySelectorAll("button");
 
-sizeButtons.forEach(function (btn) {
-    btn.classList.remove("selected");
+
+sizes.forEach(function (item) {
+
+    item.classList.remove("selected");
+
 });
+
 
 button.classList.add("selected");
 ```
@@ -26,10 +30,12 @@ button.classList.add("selected");
 function addProductToCart(name, price, button) {
 
 ```
-const product = button.closest(".product");
+const product =
+    button.closest(".product");
+
 
 const selectedSize =
-    product.querySelector(".sizes button.selected");
+    product.querySelector(".sizes .selected");
 
 
 if (!selectedSize) {
@@ -44,26 +50,15 @@ const size =
     selectedSize.textContent.trim();
 
 
-addToCart(name, price, size);
-```
+const existingProduct =
+    cart.find(function (item) {
 
-}
+        return (
+            item.name === name &&
+            item.size === size
+        );
 
-// ==========================
-// إضافة للسلة
-// ==========================
-
-function addToCart(name, price, size) {
-
-```
-const existingProduct = cart.find(function (item) {
-
-    return (
-        item.name === name &&
-        item.size === size
-    );
-
-});
+    });
 
 
 if (existingProduct) {
@@ -75,8 +70,11 @@ if (existingProduct) {
     cart.push({
 
         name: name,
+
         price: price,
+
         size: size,
+
         quantity: 1
 
     });
@@ -118,19 +116,27 @@ function updateCart() {
 const cartCount =
     document.getElementById("cartCount");
 
+
 const cartItems =
     document.getElementById("cartItems");
+
 
 const cartTotal =
     document.getElementById("cartTotal");
 
 
-let totalQuantity = 0;
+if (!cartCount || !cartItems || !cartTotal) {
 
-let totalPrice = 0;
+    return;
+}
 
 
 cartItems.innerHTML = "";
+
+
+let totalQuantity = 0;
+
+let totalPrice = 0;
 
 
 if (cart.length === 0) {
@@ -142,8 +148,6 @@ if (cart.length === 0) {
 
     cartTotal.textContent = "0 دج";
 
-    saveCart();
-
     return;
 }
 
@@ -151,6 +155,7 @@ if (cart.length === 0) {
 cart.forEach(function (item, index) {
 
     totalQuantity += item.quantity;
+
 
     totalPrice +=
         item.price * item.quantity;
@@ -177,8 +182,9 @@ cart.forEach(function (item, index) {
             </p>
 
             <p>
-                ${item.price} دج
+                السعر: ${item.price} دج
             </p>
+
 
             <div class="quantity">
 
@@ -189,9 +195,11 @@ cart.forEach(function (item, index) {
                     −
                 </button>
 
+
                 <span>
                     ${item.quantity}
                 </span>
+
 
                 <button
                     type="button"
@@ -203,6 +211,7 @@ cart.forEach(function (item, index) {
             </div>
 
         </div>
+
 
         <button
             type="button"
@@ -225,9 +234,6 @@ cartCount.textContent =
 
 cartTotal.textContent =
     totalPrice + " دج";
-
-
-saveCart();
 ```
 
 }
@@ -239,7 +245,13 @@ saveCart();
 function increaseQuantity(index) {
 
 ```
+if (!cart[index]) {
+    return;
+}
+
+
 cart[index].quantity++;
+
 
 saveCart();
 
@@ -255,6 +267,11 @@ updateCart();
 function decreaseQuantity(index) {
 
 ```
+if (!cart[index]) {
+    return;
+}
+
+
 cart[index].quantity--;
 
 
@@ -279,7 +296,13 @@ updateCart();
 function removeFromCart(index) {
 
 ```
+if (!cart[index]) {
+    return;
+}
+
+
 cart.splice(index, 1);
+
 
 saveCart();
 
@@ -295,14 +318,22 @@ updateCart();
 function openCart() {
 
 ```
-document
-    .getElementById("cart")
-    .classList.add("active");
+const cartElement =
+    document.getElementById("cart");
 
 
-document
-    .getElementById("overlay")
-    .classList.add("active");
+const overlay =
+    document.getElementById("overlay");
+
+
+if (!cartElement || !overlay) {
+    return;
+}
+
+
+cartElement.classList.add("active");
+
+overlay.classList.add("active");
 ```
 
 }
@@ -314,14 +345,22 @@ document
 function closeCart() {
 
 ```
-document
-    .getElementById("cart")
-    .classList.remove("active");
+const cartElement =
+    document.getElementById("cart");
 
 
-document
-    .getElementById("overlay")
-    .classList.remove("active");
+const overlay =
+    document.getElementById("overlay");
+
+
+if (!cartElement || !overlay) {
+    return;
+}
+
+
+cartElement.classList.remove("active");
+
+overlay.classList.remove("active");
 ```
 
 }
@@ -335,25 +374,32 @@ function goToCheckout() {
 ```
 if (cart.length === 0) {
 
-    alert("🛒 السلة فارغة! أضف منتجًا أولاً.");
+    alert(
+        "🛒 السلة فارغة! اختر منتجًا أولاً."
+    );
 
     return;
 }
 
 
-window.location.href = "checkout.html";
+window.location.href =
+    "checkout.html";
 ```
 
 }
 
 // ==========================
-// تشغيل السلة عند فتح الموقع
+// تشغيل الموقع
 // ==========================
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener(
+"DOMContentLoaded",
+function () {
 
 ```
-updateCart();
+    updateCart();
+
+}
 ```
 
-});
+);
