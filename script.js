@@ -1,50 +1,149 @@
 let cart = [];
 
-// إضافة منتج إلى السلة
-function addToCart(name, price) {
 
-    const existingProduct = cart.find(
-        item => item.name === name
-    );
+// =========================
+// اختيار المقاس
+// =========================
 
-    if (existingProduct) {
-        existingProduct.quantity++;
-    } else {
-        cart.push({
-            name: name,
-            price: price,
-            quantity: 1
-        });
+function selectSize(button) {
+
+    const parent = button.parentElement;
+
+    const buttons = parent.querySelectorAll("button");
+
+    buttons.forEach(function (btn) {
+
+        btn.classList.remove("selected");
+
+    });
+
+
+    button.classList.add("selected");
+}
+
+
+
+// =========================
+// إضافة المنتج للسلة
+// =========================
+
+function addProductToCart(name, price, button) {
+
+    const product = button.closest(".product");
+
+    const selectedButton =
+        product.querySelector(".sizes .selected");
+
+
+    // التأكد من اختيار المقاس
+
+    if (!selectedButton) {
+
+        alert("يرجى اختيار المقاس أولاً.");
+
+        return;
     }
 
+
+    const size =
+        selectedButton.textContent.trim();
+
+
+    addToCart(
+        name,
+        price,
+        size
+    );
+}
+
+
+
+// =========================
+// إضافة للسلة
+// =========================
+
+function addToCart(name, price, size) {
+
+    const existingProduct = cart.find(function (item) {
+
+        return (
+            item.name === name &&
+            item.size === size
+        );
+
+    });
+
+
+    // إذا كان المنتج والمقاس موجودين
+    // نزيد الكمية فقط
+
+    if (existingProduct) {
+
+        existingProduct.quantity++;
+
+    }
+
+    else {
+
+        cart.push({
+
+            name: name,
+
+            price: price,
+
+            size: size,
+
+            quantity: 1
+
+        });
+
+    }
+
+
     updateCart();
+
     openCart();
 }
 
 
+
+// =========================
 // تحديث السلة
+// =========================
+
 function updateCart() {
 
-    const cartCount = document.getElementById("cartCount");
-    const cartItems = document.getElementById("cartItems");
-    const cartTotal = document.getElementById("cartTotal");
+    const cartCount =
+        document.getElementById("cartCount");
 
-    // حساب عدد جميع القطع
+
+    const cartItems =
+        document.getElementById("cartItems");
+
+
+    const cartTotal =
+        document.getElementById("cartTotal");
+
+
     let totalQuantity = 0;
 
-    cart.forEach(item => {
-        totalQuantity += item.quantity;
-    });
+    let totalPrice = 0;
 
-    cartCount.textContent = totalQuantity;
+
+    cartItems.innerHTML = "";
+
 
 
     // السلة فارغة
+
     if (cart.length === 0) {
 
         cartItems.innerHTML = `
             <p>السلة فارغة.</p>
         `;
+
+
+        cartCount.textContent = "0";
 
         cartTotal.textContent = "0 دج";
 
@@ -52,20 +151,28 @@ function updateCart() {
     }
 
 
-    let total = 0;
-
-    cartItems.innerHTML = "";
-
 
     // عرض المنتجات
-    cart.forEach((item, index) => {
 
-        total += item.price * item.quantity;
+    cart.forEach(function (item, index) {
 
 
-        const itemElement = document.createElement("div");
+        totalQuantity +=
+            item.quantity;
 
-        itemElement.className = "cart-item";
+
+        totalPrice +=
+            item.price * item.quantity;
+
+
+
+        const itemElement =
+            document.createElement("div");
+
+
+        itemElement.className =
+            "cart-item";
+
 
 
         itemElement.innerHTML = `
@@ -77,21 +184,32 @@ function updateCart() {
                 </strong>
 
                 <p>
+                    المقاس: ${item.size}
+                </p>
+
+                <p>
                     ${item.price} دج
                 </p>
 
+
                 <div class="quantity">
 
-                    <button onclick="increaseQuantity(${index})">
-                        +
+                    <button
+                        onclick="decreaseQuantity(${index})"
+                    >
+                        −
                     </button>
+
 
                     <span>
                         ${item.quantity}
                     </span>
 
-                    <button onclick="decreaseQuantity(${index})">
-                        -
+
+                    <button
+                        onclick="increaseQuantity(${index})"
+                    >
+                        +
                     </button>
 
                 </div>
@@ -99,7 +217,9 @@ function updateCart() {
             </div>
 
 
-            <button onclick="removeFromCart(${index})">
+            <button
+                onclick="removeFromCart(${index})"
+            >
                 حذف
             </button>
 
@@ -111,11 +231,25 @@ function updateCart() {
     });
 
 
-    cartTotal.textContent = total + " دج";
+
+    // تحديث العدد
+
+    cartCount.textContent =
+        totalQuantity;
+
+
+    // تحديث السعر
+
+    cartTotal.textContent =
+        totalPrice + " دج";
 }
 
 
+
+// =========================
 // زيادة الكمية
+// =========================
+
 function increaseQuantity(index) {
 
     cart[index].quantity++;
@@ -124,20 +258,32 @@ function increaseQuantity(index) {
 }
 
 
+
+// =========================
 // إنقاص الكمية
+// =========================
+
 function decreaseQuantity(index) {
 
     cart[index].quantity--;
 
+
     if (cart[index].quantity <= 0) {
+
         cart.splice(index, 1);
+
     }
+
 
     updateCart();
 }
 
 
+
+// =========================
 // حذف المنتج
+// =========================
+
 function removeFromCart(index) {
 
     cart.splice(index, 1);
@@ -146,12 +292,17 @@ function removeFromCart(index) {
 }
 
 
+
+// =========================
 // فتح السلة
+// =========================
+
 function openCart() {
 
     document
         .getElementById("cart")
         .classList.add("active");
+
 
     document
         .getElementById("overlay")
@@ -159,12 +310,17 @@ function openCart() {
 }
 
 
+
+// =========================
 // إغلاق السلة
+// =========================
+
 function closeCart() {
 
     document
         .getElementById("cart")
         .classList.remove("active");
+
 
     document
         .getElementById("overlay")
