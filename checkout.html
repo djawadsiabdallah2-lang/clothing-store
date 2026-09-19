@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>STYLE | إتمام الطلب</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #101820;
+        color: white;
+    }
+
+    .checkout-page {
+        max-width: 900px;
+        margin: 60px auto;
+        padding: 20px;
+    }
+
+    .checkout-title {
+        text-align: center;
+        margin-bottom: 35px;
+    }
+
+    .checkout-title p {
+        color: #00a8ff;
+        margin-bottom: 8px;
+    }
+
+    .checkout-title h1 {
+        margin: 0;
+        font-size: 35px;
+    }
+
+    .checkout-box {
+        background: #182631;
+        border-radius: 18px;
+        padding: 30px;
+        margin-bottom: 25px;
+    }
+
+    .checkout-box h2 {
+        margin-top: 0;
+        margin-bottom: 25px;
+    }
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 14px;
+        border: 1px solid #334955;
+        border-radius: 10px;
+        background: #101820;
+        color: white;
+        font-size: 16px;
+        outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        border-color: #00a8ff;
+    }
+
+    .form-group textarea {
+        min-height: 110px;
+        resize: vertical;
+    }
+
+    .order-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        padding: 15px 0;
+        border-bottom: 1px solid #334955;
+    }
+
+    .order-item:last-child {
+        border-bottom: none;
+    }
+
+    .order-item-name {
+        font-weight: bold;
+    }
+
+    .order-item-details {
+        color: #aebbc4;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+    .order-item-price {
+        color: #00a8ff;
+        font-weight: bold;
+        white-space: nowrap;
+    }
+
+    .total-box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 2px solid #334955;
+        font-size: 20px;
+    }
+
+    .total-price {
+        color: #00a8ff;
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    .confirm-button {
+        width: 100%;
+        padding: 16px;
+        border: none;
+        border-radius: 12px;
+        background: #00a8ff;
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .confirm-button:hover {
+        background: #008ed6;
+        transform: translateY(-2px);
+    }
+
+    .back-button {
+        display: block;
+        width: fit-content;
+        margin: 25px auto 0;
+        color: #00a8ff;
+        text-decoration: none;
+    }
+
+    .empty-order {
+        text-align: center;
+        color: #aebbc4;
+        padding: 20px;
+    }
+
+    @media (max-width: 600px) {
+        .checkout-page {
+            margin: 25px auto;
+            padding: 15px;
+        }
+
+        .checkout-box {
+            padding: 20px;
+        }
+
+        .checkout-title h1 {
+            font-size: 28px;
+        }
+
+        .order-item {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<main class="checkout-page">
+
+    <div class="checkout-title">
+        <p>STYLE 👕</p>
+        <h1>إتمام الطلب</h1>
+    </div>
+
+
+    <!-- معلومات الزبون -->
+
+    <div class="checkout-box">
+
+        <h2>👤 معلومات الزبون</h2>
+
+        <form id="checkoutForm">
+
+            <div class="form-group">
+
+                <label for="customerName">
+                    الاسم الكامل
+                </label>
+
+                <input
+                    type="text"
+                    id="customerName"
+                    placeholder="أدخل اسمك الكامل"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="phone">
+                    رقم الهاتف
+                </label>
+
+                <input
+                    type="tel"
+                    id="phone"
+                    placeholder="مثال: 0550000000"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="address">
+                    العنوان
+                </label>
+
+                <textarea
+                    id="address"
+                    placeholder="أدخل عنوانك بالتفصيل"
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="wilaya">
+                    الولاية
+                </label>
+
+                <input
+                    type="text"
+                    id="wilaya"
+                    placeholder="مثال: بسكرة"
+                    required
+                >
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+
+    <!-- ملخص الطلب -->
+
+    <div class="checkout-box">
+
+        <h2>🛒 ملخص الطلب</h2>
+
+        <div id="orderItems">
+
+            <div class="empty-order">
+                جاري تحميل الطلب...
+            </div>
+
+        </div>
+
+
+        <div class="total-box">
+
+            <span>
+                المجموع:
+            </span>
+
+            <span
+                id="orderTotal"
+                class="total-price"
+            >
+                0 دج
+            </span>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- تأكيد -->
+
+    <div class="checkout-box">
+
+        <button
+            type="button"
+            class="confirm-button"
+            onclick="confirmOrder()"
+        >
+            ✅ تأكيد الطلب
+        </button>
+
+    </div>
+
+
+    <a href="index.html" class="back-button">
+        ← العودة إلى المتجر
+    </a>
+
+</main>
+
+
+
+<script>
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+
+    function displayOrder() {
+
+        const orderItems = document.getElementById("orderItems");
+        const orderTotal = document.getElementById("orderTotal");
+
+        if (cart.length === 0) {
+
+            orderItems.innerHTML = `
+                <div class="empty-order">
+                    🛒 لا توجد منتجات في السلة.
+                </div>
+            `;
+
+            orderTotal.textContent = "0 دج";
+
+            return;
+        }
+
+
+        let total = 0;
+
+        orderItems.innerHTML = "";
+
+
+        cart.forEach((item) => {
+
+            const quantity = item.quantity || 1;
+
+            const itemTotal = item.price * quantity;
+
+            total += itemTotal;
+
+
+            const div = document.createElement("div");
+
+            div.className = "order-item";
+
+
+            div.innerHTML = `
+
+                <div>
+
+                    <div class="order-item-name">
+                        ${item.name}
+                    </div>
+
+                    <div class="order-item-details">
+
+                        المقاس:
+                        ${item.size || "غير محدد"}
+
+                        |
+
+                        الكمية:
+                        ${quantity}
+
+                    </div>
+
+                </div>
+
+
+                <div class="order-item-price">
+
+                    ${itemTotal} دج
+
+                </div>
+
+            `;
+
+
+            orderItems.appendChild(div);
+
+        });
+
+
+        orderTotal.textContent = total + " دج";
+
+    }
+
+
+
+    function confirmOrder() {
+
+        const name =
+            document.getElementById("customerName").value.trim();
+
+        const phone =
+            document.getElementById("phone").value.trim();
+
+        const address =
+            document.getElementById("address").value.trim();
+
+        const wilaya =
+            document.getElementById("wilaya").value.trim();
+
+
+        if (cart.length === 0) {
+
+            alert("السلة فارغة! أضف منتجًا أولاً.");
+
+            return;
+
+        }
+
+
+        if (!name || !phone || !address || !wilaya) {
+
+            alert("يرجى ملء جميع معلومات الطلب.");
+
+            return;
+
+        }
+
+
+        alert(
+            "تم استلام طلبك بنجاح! 🎉\n\n" +
+            "شكرًا لك " + name + " ❤️"
+        );
+
+
+        localStorage.removeItem("cart");
+
+
+        window.location.href = "index.html";
+
+    }
+
+
+
+    displayOrder();
+
+</script>
+```
+
+</body>
+
+</html>
