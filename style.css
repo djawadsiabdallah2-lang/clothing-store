@@ -871,3 +871,22 @@ body {
     }
 
 }
+
+.sizes {
+    position: relative;
+    z-index: 10;
+}
+
+.sizes button {
+    position: relative;
+    z-index: 20;
+
+    pointer-events: auto;
+
+    cursor: pointer;
+}
+
+.add-button {
+    position: relative;
+    z-index: 10;
+}
