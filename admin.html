@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+
+<head>
+
+```
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>STYLE | الإدارة</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        min-height: 100vh;
+        font-family: Arial, sans-serif;
+        background:
+            radial-gradient(
+                circle at top,
+                rgba(0, 170, 255, 0.15),
+                transparent 40%
+            ),
+            #0b0b0b;
+
+        color: white;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        padding: 20px;
+    }
+
+    .login-box {
+
+        width: 100%;
+        max-width: 430px;
+
+        background: #151515;
+
+        border: 1px solid #292929;
+
+        border-radius: 18px;
+
+        padding: 35px;
+
+        box-shadow:
+            0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .logo {
+
+        text-align: center;
+
+        font-size: 30px;
+
+        font-weight: bold;
+
+        margin-bottom: 10px;
+    }
+
+    .logo span {
+
+        color: #00aaff;
+    }
+
+    .subtitle {
+
+        text-align: center;
+
+        color: #888;
+
+        margin-bottom: 30px;
+    }
+
+    .form-group {
+
+        margin-bottom: 20px;
+    }
+
+    label {
+
+        display: block;
+
+        margin-bottom: 8px;
+
+        font-weight: bold;
+    }
+
+    input {
+
+        width: 100%;
+
+        padding: 14px;
+
+        border-radius: 9px;
+
+        border: 1px solid #333;
+
+        background: #101010;
+
+        color: white;
+
+        font-size: 16px;
+
+        outline: none;
+    }
+
+    input:focus {
+
+        border-color: #00aaff;
+    }
+
+    .login-button {
+
+        width: 100%;
+
+        padding: 14px;
+
+        border: none;
+
+        border-radius: 9px;
+
+        background: #00aaff;
+
+        color: white;
+
+        font-size: 17px;
+
+        font-weight: bold;
+
+        cursor: pointer;
+
+        transition: 0.3s;
+    }
+
+    .login-button:hover {
+
+        background: #008dcc;
+
+        transform: translateY(-2px);
+    }
+
+    .login-button:disabled {
+
+        opacity: 0.6;
+
+        cursor: not-allowed;
+
+        transform: none;
+    }
+
+    .message {
+
+        margin-top: 18px;
+
+        text-align: center;
+
+        min-height: 25px;
+
+        font-weight: bold;
+    }
+
+    .back {
+
+        display: block;
+
+        text-align: center;
+
+        margin-top: 25px;
+
+        color: #00aaff;
+
+        text-decoration: none;
+    }
+
+    .back:hover {
+
+        text-decoration: underline;
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+<div class="login-box">
+
+```
+<div class="logo">
+
+    STYLE <span>🔐</span>
+
+</div>
+
+<p class="subtitle">
+    لوحة تحكم الإدارة
+</p>
+
+
+<form id="loginForm">
+
+    <div class="form-group">
+
+        <label for="email">
+            البريد الإلكتروني
+        </label>
+
+        <input
+            type="email"
+            id="email"
+            placeholder="admin@example.com"
+            required
+        >
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label for="password">
+            كلمة المرور
+        </label>
+
+        <input
+            type="password"
+            id="password"
+            placeholder="أدخل كلمة المرور"
+            required
+        >
+
+    </div>
+
+
+    <button
+        type="submit"
+        class="login-button"
+        id="loginButton"
+    >
+        🔑 تسجيل الدخول
+    </button>
+
+</form>
+
+
+<div
+    id="message"
+    class="message"
+></div>
+
+
+<a
+    href="index.html"
+    class="back"
+>
+    ← العودة إلى المتجر
+</a>
+```
+
+</div>
+
+<script>
+
+    // ==========================================
+    // بيانات Supabase
+    // ==========================================
+
+    const SUPABASE_URL =
+        "ضع_رابط_مشروعك_هنا";
+
+    const SUPABASE_ANON_KEY =
+        "ضع_مفتاح_anon_هنا";
+
+
+    const supabaseClient =
+        supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_ANON_KEY
+        );
+
+
+    // ==========================================
+    // تسجيل الدخول
+    // ==========================================
+
+    const loginForm =
+        document.getElementById("loginForm");
+
+    const loginButton =
+        document.getElementById("loginButton");
+
+    const message =
+        document.getElementById("message");
+
+
+    loginForm.addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+
+            const email =
+                document
+                    .getElementById("email")
+                    .value
+                    .trim();
+
+
+            const password =
+                document
+                    .getElementById("password")
+                    .value;
+
+
+            message.textContent = "";
+
+            loginButton.disabled = true;
+
+            loginButton.textContent =
+                "⏳ جاري تسجيل الدخول...";
+
+
+            try {
+
+                const { data, error } =
+                    await supabaseClient.auth.signInWithPassword({
+
+                        email: email,
+
+                        password: password
+
+                    });
+
+
+                if (error) {
+
+                    throw error;
+
+                }
+
+
+                message.textContent =
+                    "✅ تم تسجيل الدخول بنجاح";
+
+
+                message.style.color =
+                    "#00ff88";
+
+
+                setTimeout(function () {
+
+                    window.location.href =
+                        "admin-dashboard.html";
+
+                }, 800);
+
+
+            } catch (error) {
+
+                console.error(error);
+
+
+                message.textContent =
+                    "❌ البريد الإلكتروني أو كلمة المرور غير صحيحة";
+
+
+                message.style.color =
+                    "#ff5555";
+
+
+                loginButton.disabled = false;
+
+                loginButton.textContent =
+                    "🔑 تسجيل الدخول";
+
+            }
+
+        }
+    );
+
+
+    // ==========================================
+    // إذا كان المدير مسجلًا مسبقًا
+    // ==========================================
+
+    async function checkSession() {
+
+        const { data } =
+            await supabaseClient.auth.getSession();
+
+
+        if (
+            data &&
+            data.session
+        ) {
+
+            window.location.href =
+                "admin-dashboard.html";
+
+        }
+
+    }
+
+
+    checkSession();
+
+</script>
+
+</body>
+
+</html>
