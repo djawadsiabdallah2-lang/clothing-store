@@ -1,0 +1,251 @@
+```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>دخول الإدارة</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-family: Arial, sans-serif;
+
+            background: #101820;
+            color: white;
+        }
+
+        .login-box {
+            width: 90%;
+            max-width: 420px;
+
+            background: #182631;
+
+            padding: 35px;
+
+            border-radius: 16px;
+
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        h1 {
+            text-align: center;
+            color: #00a8ff;
+
+            margin-top: 0;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: #b8c5cf;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 13px;
+
+            margin-bottom: 18px;
+
+            border: 1px solid #304250;
+
+            border-radius: 8px;
+
+            background: #101820;
+
+            color: white;
+
+            font-size: 16px;
+
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #00a8ff;
+        }
+
+        button {
+            width: 100%;
+
+            padding: 13px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #00a8ff;
+
+            color: white;
+
+            font-size: 16px;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #008ed6;
+        }
+
+        #message {
+            text-align: center;
+            margin-top: 18px;
+            min-height: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-box">
+
+        <h1>🔐 لوحة الإدارة</h1>
+
+        <form id="loginForm">
+
+            <label for="email">
+                البريد الإلكتروني
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="admin@example.com"
+                required
+            >
+
+            <label for="password">
+                كلمة المرور
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="••••••••"
+                required
+            >
+
+            <button type="submit">
+                🔑 تسجيل الدخول
+            </button>
+
+        </form>
+
+        <div id="message"></div>
+
+    </div>
+
+
+    <script>
+
+        // ==========================================
+        // إعداد Supabase
+        // ==========================================
+
+        const SUPABASE_URL =
+            "https://asnuclplpvvozslziqjc.supabase.co";
+
+        const SUPABASE_ANON_KEY =
+            "sb_publishable_dRKgnlRt6KzMOaeZV8e6Gg_Txxa5OZV";
+
+
+        const supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_ANON_KEY
+            );
+
+
+        // ==========================================
+        // تسجيل الدخول
+        // ==========================================
+
+        document
+            .getElementById("loginForm")
+            .addEventListener("submit", async function(event) {
+
+                event.preventDefault();
+
+
+                const email =
+                    document
+                        .getElementById("email")
+                        .value
+                        .trim();
+
+
+                const password =
+                    document
+                        .getElementById("password")
+                        .value;
+
+
+                const message =
+                    document.getElementById("message");
+
+
+                message.textContent =
+                    "جاري تسجيل الدخول...";
+
+
+                const {
+                    data,
+                    error
+                } =
+                    await supabaseClient.auth.signInWithPassword({
+                        email: email,
+                        password: password
+                    });
+
+
+                if (error) {
+
+                    console.error(error);
+
+                    message.textContent =
+                        "❌ فشل تسجيل الدخول: " +
+                        error.message;
+
+                    return;
+                }
+
+
+                if (data.session) {
+
+                    message.textContent =
+                        "✅ تم تسجيل الدخول بنجاح!";
+
+
+                    setTimeout(function() {
+
+                        window.location.href =
+                            "admin.html";
+
+                    }, 500);
+                }
+
+            });
+
+    </script>
+
+</body>
+
+</html>
+```
