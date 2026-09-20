@@ -925,3 +925,39 @@ background: #00a8ff;
 color: white;
 border-color: #00a8ff;
 }
+
+/* ========================================
+   إصلاح أزرار المنتجات
+======================================== */
+
+.product {
+    position: relative;
+}
+
+.product-info {
+    position: relative;
+    z-index: 5;
+}
+
+.sizes {
+    position: relative;
+    z-index: 10;
+}
+
+.sizes button {
+    position: relative;
+    z-index: 11;
+
+    pointer-events: auto !important;
+
+    cursor: pointer;
+}
+
+.add-button {
+    position: relative;
+    z-index: 12;
+
+    pointer-events: auto !important;
+
+    cursor: pointer;
+}
