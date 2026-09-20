@@ -4,593 +4,744 @@
 
 <head>
 
-```
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>STYLE | متجر الملابس</title>
+    <title>STYLE | متجر الملابس</title>
 
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 
-<style>
+    <style>
 
-    /* إصلاح المقاسات */
+        /* ==========================
+           أزرار المقاسات
+        ========================== */
 
-    .sizes {
-        display: flex;
-        gap: 8px;
-        margin-bottom: 15px;
-        position: relative;
-        z-index: 9999;
-    }
+        .sizes {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 50;
+        }
 
-    .sizes button {
-        width: 50px;
-        height: 42px;
-        padding: 0;
-        background: #222;
-        color: white;
-        border: 2px solid #444;
-        border-radius: 7px;
-        cursor: pointer;
-        font-weight: bold;
-        position: relative;
-        z-index: 9999;
-        pointer-events: auto;
-    }
+        .sizes button {
+            width: 50px;
+            height: 42px;
+            padding: 0;
 
-    .sizes button:hover {
-        border-color: #00aaff;
-    }
+            background: #222;
+            color: white;
 
-    .sizes button.selected {
-        background: #00aaff;
-        border-color: #00aaff;
-        color: white;
-    }
+            border: 2px solid #444;
+            border-radius: 7px;
 
-</style>
-```
+            cursor: pointer;
+
+            font-weight: bold;
+            font-size: 15px;
+
+            position: relative;
+            z-index: 51;
+
+            pointer-events: auto;
+        }
+
+        .sizes button:hover {
+            background: #00aaff;
+            border-color: #00aaff;
+        }
+
+        .sizes button.selected {
+            background: #00aaff;
+            border-color: #00aaff;
+            color: white;
+        }
+
+
+        /* ==========================
+           زر أضف إلى السلة
+        ========================== */
+
+        .add-button {
+            position: relative;
+            z-index: 52;
+
+            pointer-events: auto;
+
+            cursor: pointer;
+        }
+
+    </style>
 
 </head>
 
+
 <body>
+
+
+<!-- ==========================
+     NAVBAR
+========================== -->
 
 <header class="navbar">
 
-```
-<div class="logo">
-    STYLE 👕
-</div>
-
-
-<nav>
-
-    <a href="#home">الرئيسية</a>
-
-    <a href="#products">المنتجات</a>
-
-    <a href="#categories">الأقسام</a>
-
-    <a href="#about">من نحن</a>
-
-    <a href="#contact">تواصل معنا</a>
-
-</nav>
-
-
-<button
-    type="button"
-    class="cart-button"
-    onclick="openCart()"
->
-
-    🛒 السلة
-
-    <span id="cartCount">0</span>
-
-</button>
-```
-
-</header>
-
-<section class="hero" id="home">
-
-```
-<div class="hero-content">
-
-    <p class="small-title">
-        مرحبًا بك في متجر STYLE
-    </p>
-
-
-    <h1>
-        أناقتك تبدأ
-        <span>من هنا.</span>
-    </h1>
-
-
-    <p>
-        اكتشف أحدث الملابس العصرية
-        بجودة عالية وأسعار مناسبة.
-    </p>
-
-
-    <a
-        href="#products"
-        class="hero-button"
-    >
-        تسوق الآن
-    </a>
-
-</div>
-```
-
-</section>
-
-<section id="categories" class="section">
-
-```
-<div class="section-title">
-
-    <p>اكتشف مجموعتنا</p>
-
-    <h2>الأقسام</h2>
-
-</div>
-
-
-<div class="categories">
-
-    <div class="category">
-        <div>👕</div>
-        <h3>تيشيرتات</h3>
-        <p>أحدث التصاميم</p>
+    <div class="logo">
+        STYLE 👕
     </div>
 
 
-    <div class="category">
-        <div>👖</div>
-        <h3>بناطيل</h3>
-        <p>أناقة وراحة</p>
-    </div>
+    <nav>
 
+        <a href="#home">
+            الرئيسية
+        </a>
 
-    <div class="category">
-        <div>🧥</div>
-        <h3>جاكيتات</h3>
-        <p>ستايل عصري</p>
-    </div>
+        <a href="#products">
+            المنتجات
+        </a>
 
+        <a href="#categories">
+            الأقسام
+        </a>
 
-    <div class="category">
-        <div>👟</div>
-        <h3>أحذية</h3>
-        <p>أكمل إطلالتك</p>
-    </div>
+        <a href="#about">
+            من نحن
+        </a>
 
-</div>
-```
+        <a href="#contact">
+            تواصل معنا
+        </a>
 
-</section>
-
-<section id="products" class="section">
-
-```
-<div class="section-title">
-
-    <p>منتجاتنا</p>
-
-    <h2>أحدث المنتجات</h2>
-
-</div>
-
-
-<div class="products">
-
-
-    <!-- المنتج 1 -->
-
-    <div class="product">
-
-        <div class="product-image">
-            👕
-        </div>
-
-
-        <div class="product-info">
-
-            <small>تيشيرت</small>
-
-            <h3>
-                تيشيرت أسود كلاسيكي
-            </h3>
-
-            <strong>
-                2500 دج
-            </strong>
-
-
-            <div class="size-title">
-                اختر المقاس:
-            </div>
-
-
-            <div class="sizes">
-
-                <button
-                    type="button"
-                    onclick="selectSize(this)"
-                >
-                    S
-                </button>
-
-                <button
-                    type="button"
-                    onclick="selectSize(this)"
-                >
-                    M
-                </button>
-
-                <button
-                    type="button"
-                    onclick="selectSize(this)"
-                >
-                    L
-                </button>
-
-                <button
-                    type="button"
-                    onclick="selectSize(this)"
-                >
-                    XL
-                </button>
-
-            </div>
-
-
-            <button
-                type="button"
-                class="add-button"
-                onclick="addProductToCart('تيشيرت أسود كلاسيكي', 2500, this)"
-            >
-                أضف إلى السلة
-            </button>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- المنتج 2 -->
-
-    <div class="product">
-
-        <div class="product-image">
-            👖
-        </div>
-
-
-        <div class="product-info">
-
-            <small>بنطال</small>
-
-            <h3>
-                بنطال جينز عصري
-            </h3>
-
-            <strong>
-                4500 دج
-            </strong>
-
-
-            <div class="size-title">
-                اختر المقاس:
-            </div>
-
-
-            <div class="sizes">
-
-                <button
-                    type="button"
-                    onclick="selectSize(this)"
-                >
-                    S
-                </button>
-
-                <button
-                    type="button"
-                    onclick="selectSize(this)"
-                >
-                    M
-                </button>
-
-                <button
-                    type="button"
-                    onclick="selectSize(this)"
-                >
-                    L
-                </button>
-
-                <button
-                    type="button"
-                    onclick="selectSize(this)"
-                >
-                    XL
-                </button>
-
-            </div>
-
-
-            <button
-                type="button"
-                class="add-button"
-                onclick="addProductToCart('بنطال جينز عصري', 4500, this)"
-            >
-                أضف إلى السلة
-            </button>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- المنتج 3 -->
-
-    <div class="product">
-
-        <div class="product-image">
-            🧥
-        </div>
-
-
-        <div class="product-info">
-
-            <small>جاكيت</small>
-
-            <h3>
-                جاكيت أسود فاخر
-            </h3>
-
-            <strong>
-                7500 دج
-            </strong>
-
-
-            <div class="size-title">
-                اختر المقاس:
-            </div>
-
-
-            <div class="sizes">
-
-                <button
-                    type="button"
-                    onclick="selectSize(this)"
-                >
-                    S
-                </button>
-
-                <button
-                    type="button"
-                    onclick="selectSize(this)"
-                >
-                    M
-                </button>
-
-                <button
-                    type="button"
-                    onclick="selectSize(this)"
-                >
-                    L
-                </button>
-
-                <button
-                    type="button"
-                    onclick="selectSize(this)"
-                >
-                    XL
-                </button>
-
-            </div>
-
-
-            <button
-                type="button"
-                class="add-button"
-                onclick="addProductToCart('جاكيت أسود فاخر', 7500, this)"
-            >
-                أضف إلى السلة
-            </button>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- المنتج 4 -->
-
-    <div class="product">
-
-        <div class="product-image">
-            👟
-        </div>
-
-
-        <div class="product-info">
-
-            <small>أحذية</small>
-
-            <h3>
-                حذاء رياضي
-            </h3>
-
-            <strong>
-                6500 دج
-            </strong>
-
-
-            <div class="size-title">
-                اختر المقاس:
-            </div>
-
-
-            <div class="sizes">
-
-                <button
-                    type="button"
-                    onclick="selectSize(this)"
-                >
-                    39
-                </button>
-
-                <button
-                    type="button"
-                    onclick="selectSize(this)"
-                >
-                    40
-                </button>
-
-                <button
-                    type="button"
-                    onclick="selectSize(this)"
-                >
-                    41
-                </button>
-
-                <button
-                    type="button"
-                    onclick="selectSize(this)"
-                >
-                    42
-                </button>
-
-            </div>
-
-
-            <button
-                type="button"
-                class="add-button"
-                onclick="addProductToCart('حذاء رياضي', 6500, this)"
-            >
-                أضف إلى السلة
-            </button>
-
-        </div>
-
-    </div>
-
-
-</div>
-```
-
-</section>
-
-<section id="about" class="about">
-
-```
-<div>
-
-    <p>من نحن</p>
-
-    <h2>
-        STYLE — أسلوبك، هويتك.
-    </h2>
-
-    <p>
-        متجر ملابس يهتم بتقديم أزياء عصرية
-        تجمع بين الجودة والأناقة والراحة.
-    </p>
-
-</div>
-```
-
-</section>
-
-<section id="contact" class="section">
-
-```
-<div class="section-title">
-
-    <p>هل لديك سؤال؟</p>
-
-    <h2>تواصل معنا</h2>
-
-</div>
-
-
-<div class="contact">
-
-    <p>📞 الهاتف: 0000 00 000 0</p>
-
-    <p>📍 الجزائر</p>
-
-    <p>📧 example@email.com</p>
-
-</div>
-```
-
-</section>
-
-<!-- السلة -->
-
-<div id="cart" class="cart">
-
-```
-<div class="cart-header">
-
-    <h2>
-        🛒 سلة المشتريات
-    </h2>
+    </nav>
 
 
     <button
         type="button"
-        onclick="closeCart()"
+        class="cart-button"
+        onclick="openCart()"
     >
-        ✕
+
+        🛒 السلة
+
+        <span id="cartCount">
+            0
+        </span>
+
     </button>
 
-</div>
+</header>
 
 
-<div id="cartItems">
 
-    <p>
-        السلة فارغة.
-    </p>
+<!-- ==========================
+     HERO
+========================== -->
 
-</div>
-
-
-<div class="cart-total">
-
-    <span>
-        المجموع:
-    </span>
-
-
-    <strong id="cartTotal">
-        0 دج
-    </strong>
-
-</div>
-
-
-<button
-    type="button"
-    class="checkout"
-    onclick="goToCheckout()"
+<section
+    class="hero"
+    id="home"
 >
-    إتمام الطلب
-</button>
-```
+
+    <div class="hero-content">
+
+        <p class="small-title">
+            مرحبًا بك في متجر STYLE
+        </p>
+
+
+        <h1>
+
+            أناقتك تبدأ
+
+            <span>
+                من هنا.
+            </span>
+
+        </h1>
+
+
+        <p>
+
+            اكتشف أحدث الملابس العصرية
+            بجودة عالية وأسعار مناسبة.
+
+        </p>
+
+
+        <a
+            href="#products"
+            class="hero-button"
+        >
+
+            تسوق الآن
+
+        </a>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================
+     CATEGORIES
+========================== -->
+
+<section
+    id="categories"
+    class="section"
+>
+
+    <div class="section-title">
+
+        <p>
+            اكتشف مجموعتنا
+        </p>
+
+        <h2>
+            الأقسام
+        </h2>
+
+    </div>
+
+
+    <div class="categories">
+
+
+        <div class="category">
+
+            <div>
+                👕
+            </div>
+
+            <h3>
+                تيشيرتات
+            </h3>
+
+            <p>
+                أحدث التصاميم
+            </p>
+
+        </div>
+
+
+
+        <div class="category">
+
+            <div>
+                👖
+            </div>
+
+            <h3>
+                بناطيل
+            </h3>
+
+            <p>
+                أناقة وراحة
+            </p>
+
+        </div>
+
+
+
+        <div class="category">
+
+            <div>
+                🧥
+            </div>
+
+            <h3>
+                جاكيتات
+            </h3>
+
+            <p>
+                ستايل عصري
+            </p>
+
+        </div>
+
+
+
+        <div class="category">
+
+            <div>
+                👟
+            </div>
+
+            <h3>
+                أحذية
+            </h3>
+
+            <p>
+                أكمل إطلالتك
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================
+     PRODUCTS
+========================== -->
+
+<section
+    id="products"
+    class="section"
+>
+
+    <div class="section-title">
+
+        <p>
+            منتجاتنا
+        </p>
+
+        <h2>
+            أحدث المنتجات
+        </h2>
+
+    </div>
+
+
+    <div class="products">
+
+
+        <!-- =====================
+             المنتج 1
+        ====================== -->
+
+        <div class="product">
+
+            <div class="product-image">
+                👕
+            </div>
+
+
+            <div class="product-info">
+
+                <small>
+                    تيشيرت
+                </small>
+
+
+                <h3>
+                    تيشيرت أسود كلاسيكي
+                </h3>
+
+
+                <strong>
+                    2500 دج
+                </strong>
+
+
+                <div class="size-title">
+                    اختر المقاس:
+                </div>
+
+
+                <div class="sizes">
+
+                    <button type="button">
+                        S
+                    </button>
+
+                    <button type="button">
+                        M
+                    </button>
+
+                    <button type="button">
+                        L
+                    </button>
+
+                    <button type="button">
+                        XL
+                    </button>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="add-button"
+                >
+
+                    أضف إلى السلة
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================
+             المنتج 2
+        ====================== -->
+
+        <div class="product">
+
+            <div class="product-image">
+                👖
+            </div>
+
+
+            <div class="product-info">
+
+                <small>
+                    بنطال
+                </small>
+
+
+                <h3>
+                    بنطال جينز عصري
+                </h3>
+
+
+                <strong>
+                    4500 دج
+                </strong>
+
+
+                <div class="size-title">
+                    اختر المقاس:
+                </div>
+
+
+                <div class="sizes">
+
+                    <button type="button">
+                        S
+                    </button>
+
+                    <button type="button">
+                        M
+                    </button>
+
+                    <button type="button">
+                        L
+                    </button>
+
+                    <button type="button">
+                        XL
+                    </button>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="add-button"
+                >
+
+                    أضف إلى السلة
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================
+             المنتج 3
+        ====================== -->
+
+        <div class="product">
+
+            <div class="product-image">
+                🧥
+            </div>
+
+
+            <div class="product-info">
+
+                <small>
+                    جاكيت
+                </small>
+
+
+                <h3>
+                    جاكيت أسود فاخر
+                </h3>
+
+
+                <strong>
+                    7500 دج
+                </strong>
+
+
+                <div class="size-title">
+                    اختر المقاس:
+                </div>
+
+
+                <div class="sizes">
+
+                    <button type="button">
+                        S
+                    </button>
+
+                    <button type="button">
+                        M
+                    </button>
+
+                    <button type="button">
+                        L
+                    </button>
+
+                    <button type="button">
+                        XL
+                    </button>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="add-button"
+                >
+
+                    أضف إلى السلة
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================
+             المنتج 4
+        ====================== -->
+
+        <div class="product">
+
+            <div class="product-image">
+                👟
+            </div>
+
+
+            <div class="product-info">
+
+                <small>
+                    أحذية
+                </small>
+
+
+                <h3>
+                    حذاء رياضي
+                </h3>
+
+
+                <strong>
+                    6500 دج
+                </strong>
+
+
+                <div class="size-title">
+                    اختر المقاس:
+                </div>
+
+
+                <div class="sizes">
+
+                    <button type="button">
+                        39
+                    </button>
+
+                    <button type="button">
+                        40
+                    </button>
+
+                    <button type="button">
+                        41
+                    </button>
+
+                    <button type="button">
+                        42
+                    </button>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="add-button"
+                >
+
+                    أضف إلى السلة
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================
+     ABOUT
+========================== -->
+
+<section
+    id="about"
+    class="about"
+>
+
+    <div>
+
+        <p>
+            من نحن
+        </p>
+
+
+        <h2>
+            STYLE — أسلوبك، هويتك.
+        </h2>
+
+
+        <p>
+
+            متجر ملابس يهتم بتقديم أزياء عصرية
+            تجمع بين الجودة والأناقة والراحة.
+
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================
+     CONTACT
+========================== -->
+
+<section
+    id="contact"
+    class="section"
+>
+
+    <div class="section-title">
+
+        <p>
+            هل لديك سؤال؟
+        </p>
+
+        <h2>
+            تواصل معنا
+        </h2>
+
+    </div>
+
+
+    <div class="contact">
+
+        <p>
+            📞 الهاتف: 0000 00 000 0
+        </p>
+
+        <p>
+            📍 الجزائر
+        </p>
+
+        <p>
+            📧 example@email.com
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================
+     CART
+========================== -->
+
+<div
+    id="cart"
+    class="cart"
+>
+
+
+    <div class="cart-header">
+
+        <h2>
+            🛒 سلة المشتريات
+        </h2>
+
+
+        <button
+            type="button"
+            onclick="closeCart()"
+        >
+
+            ✕
+
+        </button>
+
+    </div>
+
+
+
+    <div id="cartItems">
+
+        <p>
+            السلة فارغة.
+        </p>
+
+    </div>
+
+
+
+    <div class="cart-total">
+
+        <span>
+            المجموع:
+        </span>
+
+
+        <strong id="cartTotal">
+            0 دج
+        </strong>
+
+    </div>
+
+
+
+    <button
+        type="button"
+        class="checkout"
+        onclick="goToCheckout()"
+    >
+
+        إتمام الطلب
+
+    </button>
+
 
 </div>
+
+
+
+<!-- ==========================
+     OVERLAY
+========================== -->
 
 <div
     id="overlay"
@@ -598,35 +749,14 @@
     onclick="closeCart()"
 ></div>
 
+
+
+<!-- ==========================
+     JAVASCRIPT
+========================== -->
+
 <script src="script.js"></script>
 
-<script>
-
-    /*
-       نظام اختيار المقاس يعمل مباشرة
-       داخل الصفحة
-    */
-
-    function selectSize(button) {
-
-        const parent = button.parentElement;
-
-        const buttons =
-            parent.querySelectorAll("button");
-
-
-        buttons.forEach(function (item) {
-
-            item.classList.remove("selected");
-
-        });
-
-
-        button.classList.add("selected");
-
-    }
-
-</script>
 
 </body>
 
