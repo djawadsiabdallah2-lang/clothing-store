@@ -1,262 +1,161 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <html lang="ar" dir="rtl">
 
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>STYLE | إتمام الطلب</title>
+```
+<title>STYLE — إتمام الطلب</title>
 
 <link rel="stylesheet" href="style.css">
 
 <style>
-
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #101820;
-    color: white;
-}
-
-.checkout-page {
-    max-width: 900px;
-    margin: 60px auto;
-    padding: 20px;
-}
-
-.checkout-title {
-    text-align: center;
-    margin-bottom: 35px;
-}
-
-.checkout-title p {
-    color: #00a8ff;
-}
-
-.checkout-title h1 {
-    font-size: 35px;
-}
-
-.checkout-box {
-    background: #182631;
-    border-radius: 18px;
-    padding: 30px;
-    margin-bottom: 25px;
-}
-
-.checkout-box h2 {
-    margin-top: 0;
-    margin-bottom: 25px;
-}
-
-.form-group {
-    margin-bottom: 18px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-}
-
-.form-group input,
-.form-group textarea {
-
-    width: 100%;
-    box-sizing: border-box;
-
-    padding: 14px;
-
-    border: 1px solid #334955;
-    border-radius: 10px;
-
-    background: #101820;
-    color: white;
-
-    font-size: 16px;
-    outline: none;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-    border-color: #00a8ff;
-}
-
-.form-group textarea {
-    min-height: 110px;
-    resize: vertical;
-}
-
-.order-item {
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    gap: 15px;
-
-    padding: 15px 0;
-
-    border-bottom: 1px solid #334955;
-}
-
-.order-item-name {
-    font-weight: bold;
-}
-
-.order-item-details {
-    color: #aebbc4;
-    font-size: 14px;
-    margin-top: 5px;
-}
-
-.order-item-price {
-    color: #00a8ff;
-    font-weight: bold;
-    white-space: nowrap;
-}
-
-.total-box {
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    margin-top: 20px;
-
-    padding-top: 20px;
-
-    border-top: 2px solid #334955;
-
-    font-size: 20px;
-}
-
-.total-price {
-    color: #00a8ff;
-    font-size: 25px;
-    font-weight: bold;
-}
-
-.confirm-button {
-
-    width: 100%;
-
-    padding: 16px;
-
-    border: none;
-
-    border-radius: 12px;
-
-    background: #00a8ff;
-
-    color: white;
-
-    font-size: 18px;
-
-    font-weight: bold;
-
-    cursor: pointer;
-}
-
-.confirm-button:hover {
-    background: #008ed6;
-}
-
-.confirm-button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-.back-button {
-
-    display: block;
-
-    width: fit-content;
-
-    margin: 25px auto;
-
-    color: #00a8ff;
-
-    text-decoration: none;
-}
-
-.empty-order {
-
-    text-align: center;
-
-    color: #aebbc4;
-
-    padding: 20px;
-}
-
-.success-message {
-
-    display: none;
-
-    padding: 18px;
-
-    border-radius: 12px;
-
-    text-align: center;
-
-    margin-bottom: 20px;
-
-    background: #123d2a;
-
-    border: 1px solid #1f8f5f;
-
-    color: #b8ffd9;
-}
-
-.error-message {
-
-    display: none;
-
-    padding: 18px;
-
-    border-radius: 12px;
-
-    text-align: center;
-
-    margin-bottom: 20px;
-
-    background: #451b1b;
-
-    border: 1px solid #d64545;
-
-    color: #ffd0d0;
-}
-
-@media (max-width: 600px) {
-
-    .checkout-page {
-        margin: 25px auto;
-        padding: 15px;
+    body {
+        background: #0b0b0b;
+        color: white;
+        font-family: Arial, sans-serif;
     }
 
-    .checkout-box {
+    .checkout-page {
+        max-width: 850px;
+        margin: 50px auto;
         padding: 20px;
     }
 
+    .checkout-title {
+        text-align: center;
+        margin-bottom: 35px;
+    }
+
+    .checkout-title small {
+        color: #00aaff;
+    }
+
     .checkout-title h1 {
-        font-size: 28px;
+        font-size: 38px;
+        margin: 10px 0;
+    }
+
+    .checkout-box {
+        background: #151515;
+        border: 1px solid #252525;
+        border-radius: 16px;
+        padding: 25px;
+        margin-bottom: 20px;
+    }
+
+    .checkout-box h2 {
+        margin-top: 0;
+        margin-bottom: 25px;
+    }
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 14px;
+        border-radius: 8px;
+        border: 1px solid #333;
+        background: #0b0b0b;
+        color: white;
+        font-size: 16px;
+        outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        border-color: #00aaff;
+    }
+
+    .form-group textarea {
+        min-height: 110px;
+        resize: vertical;
     }
 
     .order-item {
-        flex-direction: column;
-        align-items: flex-start;
+        padding: 15px 0;
+        border-bottom: 1px solid #292929;
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
     }
 
-}
+    .order-item:last-child {
+        border-bottom: none;
+    }
 
+    .order-item h3 {
+        margin: 0 0 7px;
+    }
+
+    .order-details {
+        color: #aaa;
+        font-size: 14px;
+    }
+
+    .order-price {
+        color: #00aaff;
+        font-weight: bold;
+        white-space: nowrap;
+    }
+
+    .total {
+        display: flex;
+        justify-content: space-between;
+        border-top: 2px solid #333;
+        margin-top: 20px;
+        padding-top: 20px;
+        font-size: 21px;
+    }
+
+    .total strong {
+        color: #00aaff;
+        font-size: 25px;
+    }
+
+    .confirm-button {
+        width: 100%;
+        padding: 16px;
+        border: none;
+        border-radius: 9px;
+        background: #00aaff;
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .confirm-button:hover {
+        background: #008dcc;
+    }
+
+    .back {
+        display: block;
+        text-align: center;
+        margin-top: 25px;
+        color: #00aaff;
+        text-decoration: none;
+    }
+
+    .empty {
+        text-align: center;
+        color: #aaa;
+        padding: 25px;
+    }
 </style>
+```
 
 </head>
 
@@ -264,28 +163,11 @@ body {
 
 <main class="checkout-page">
 
+```
 <div class="checkout-title">
-
-    <p>STYLE 👕</p>
-
+    <small>STYLE 👕</small>
     <h1>إتمام الطلب</h1>
-
-</div>
-
-
-<div
-    id="successMessage"
-    class="success-message"
->
-    ✅ تم إرسال طلبك بنجاح! شكرًا لثقتك في STYLE ❤️
-</div>
-
-
-<div
-    id="errorMessage"
-    class="error-message"
->
-    ❌ حدث خطأ أثناء إرسال الطلب.
+    <p>أدخل معلوماتك لإرسال الطلب.</p>
 </div>
 
 
@@ -293,73 +175,73 @@ body {
 
 <div class="checkout-box">
 
-<h2>👤 معلومات الزبون</h2>
+    <h2>👤 معلومات الزبون</h2>
 
-<form id="checkoutForm">
+    <form id="checkoutForm">
 
-<div class="form-group">
+        <div class="form-group">
 
-<label for="customerName">
-الاسم الكامل
-</label>
+            <label for="customerName">
+                الاسم الكامل
+            </label>
 
-<input
-    type="text"
-    id="customerName"
-    placeholder="أدخل اسمك الكامل"
-    required
->
+            <input
+                type="text"
+                id="customerName"
+                placeholder="أدخل اسمك الكامل"
+                required
+            >
 
-</div>
-
-
-<div class="form-group">
-
-<label for="phone">
-رقم الهاتف
-</label>
-
-<input
-    type="tel"
-    id="phone"
-    placeholder="مثال: 0550000000"
-    required
->
-
-</div>
+        </div>
 
 
-<div class="form-group">
+        <div class="form-group">
 
-<label for="address">
-العنوان
-</label>
+            <label for="phone">
+                رقم الهاتف
+            </label>
 
-<textarea
-    id="address"
-    placeholder="أدخل عنوانك بالتفصيل"
-    required
-></textarea>
+            <input
+                type="tel"
+                id="phone"
+                placeholder="مثال: 0550000000"
+                required
+            >
 
-</div>
+        </div>
 
 
-<div class="form-group">
+        <div class="form-group">
 
-<label for="wilaya">
-الولاية
-</label>
+            <label for="wilaya">
+                الولاية
+            </label>
 
-<input
-    type="text"
-    id="wilaya"
-    placeholder="مثال: باتنة"
-    required
->
+            <input
+                type="text"
+                id="wilaya"
+                placeholder="مثال: باتنة"
+                required
+            >
 
-</div>
+        </div>
 
-</form>
+
+        <div class="form-group">
+
+            <label for="address">
+                العنوان بالتفصيل
+            </label>
+
+            <textarea
+                id="address"
+                placeholder="أدخل عنوانك بالتفصيل"
+                required
+            ></textarea>
+
+        </div>
+
+    </form>
 
 </div>
 
@@ -368,53 +250,44 @@ body {
 
 <div class="checkout-box">
 
-<h2>🛒 ملخص الطلب</h2>
+    <h2>🛒 ملخص الطلب</h2>
 
-<div id="orderItems"></div>
+    <div id="orderItems"></div>
 
+    <div class="total">
 
-<div class="total-box">
+        <span>المجموع:</span>
 
-<span>
-المجموع:
-</span>
+        <strong id="orderTotal">
+            0 دج
+        </strong>
 
-<span
-    id="orderTotal"
-    class="total-price"
->
-0 دج
-</span>
-
-</div>
+    </div>
 
 </div>
 
 
-<!-- زر التأكيد -->
+<!-- تأكيد الطلب -->
 
 <div class="checkout-box">
 
-<button
-    type="button"
-    id="confirmButton"
-    class="confirm-button"
->
-    ✅ تأكيد الطلب
-</button>
+    <button
+        type="button"
+        class="confirm-button"
+        id="confirmOrderButton"
+    >
+        ✅ تأكيد وإرسال الطلب
+    </button>
 
 </div>
 
 
-<a
-    href="index.html"
-    class="back-button"
->
+<a href="index.html" class="back">
     ← العودة إلى المتجر
 </a>
+```
 
 </main>
-
 
 <script>
 
@@ -425,32 +298,25 @@ const SUPABASE_KEY =
     "sb_publishable_dRKgnlRt6KzMOaeZV8e6Gg_Txxa5OZV";
 
 
-/* ========================================
-   نفس السلة الموجودة في المتجر
-======================================== */
+/*
+    نستخدم نفس اسم السلة الموجود في script.js
+*/
 
-let cart = JSON.parse(
-    localStorage.getItem("style_cart") || "[]"
-);
-
-
-/* ========================================
-   السعر
-======================================== */
-
-function money(number) {
-
-    return Number(number)
-        .toLocaleString("fr-FR") + " دج";
-
-}
+let cart =
+    JSON.parse(
+        localStorage.getItem("style_cart") || "[]"
+    );
 
 
-/* ========================================
+const money = (number) =>
+    Number(number).toLocaleString("fr-FR") + " دج";
+
+
+/* =====================================
    عرض الطلب
-======================================== */
+===================================== */
 
-function displayOrder() {
+function renderOrder() {
 
     const orderItems =
         document.getElementById("orderItems");
@@ -462,8 +328,8 @@ function displayOrder() {
     if (!cart.length) {
 
         orderItems.innerHTML = `
-            <div class="empty-order">
-                🛒 لا توجد منتجات في الطلب.
+            <div class="empty">
+                🛒 السلة فارغة.
             </div>
         `;
 
@@ -476,144 +342,107 @@ function displayOrder() {
     let total = 0;
 
 
-    orderItems.innerHTML = "";
+    orderItems.innerHTML =
+        cart.map(function(item) {
+
+            const quantity =
+                Number(item.qty || 1);
+
+            const itemTotal =
+                Number(item.price) * quantity;
+
+            total += itemTotal;
 
 
-    cart.forEach(function(item) {
+            return `
+                <div class="order-item">
 
-        const quantity =
-            Number(item.qty) || 1;
+                    <div>
 
-        const price =
-            Number(item.price) || 0;
+                        <h3>
+                            ${item.name}
+                        </h3>
 
-        const itemTotal =
-            price * quantity;
+                        <div class="order-details">
 
+                            المقاس:
+                            ${item.size}
 
-        total += itemTotal;
+                            |
 
+                            الكمية:
+                            ${quantity}
 
-        const div =
-            document.createElement("div");
+                        </div>
 
+                    </div>
 
-        div.className =
-            "order-item";
-
-
-        div.innerHTML = `
-
-            <div>
-
-                <div class="order-item-name">
-                    ${item.name}
-                </div>
-
-                <div class="order-item-details">
-
-                    المقاس:
-                    ${item.size}
-
-                    |
-
-                    الكمية:
-                    ${quantity}
+                    <div class="order-price">
+                        ${money(itemTotal)}
+                    </div>
 
                 </div>
+            `;
 
-            </div>
-
-            <div class="order-item-price">
-
-                ${money(itemTotal)}
-
-            </div>
-
-        `;
-
-
-        orderItems.appendChild(div);
-
-    });
+        }).join("");
 
 
     orderTotal.textContent =
         money(total);
-
 }
 
 
-/* ========================================
-   تأكيد الطلب
-======================================== */
+/* =====================================
+   إرسال الطلب إلى Supabase
+===================================== */
 
 async function confirmOrder() {
 
     const name =
         document
-            .getElementById("customerName")
-            .value
-            .trim();
+        .getElementById("customerName")
+        .value
+        .trim();
 
 
     const phone =
         document
-            .getElementById("phone")
-            .value
-            .trim();
-
-
-    const address =
-        document
-            .getElementById("address")
-            .value
-            .trim();
+        .getElementById("phone")
+        .value
+        .trim();
 
 
     const wilaya =
         document
-            .getElementById("wilaya")
-            .value
-            .trim();
+        .getElementById("wilaya")
+        .value
+        .trim();
 
 
-    const button =
-        document.getElementById("confirmButton");
+    const address =
+        document
+        .getElementById("address")
+        .value
+        .trim();
 
 
-    const success =
-        document.getElementById("successMessage");
-
-
-    const errorBox =
-        document.getElementById("errorMessage");
-
-
-    success.style.display = "none";
-
-    errorBox.style.display = "none";
-
-
-    /* السلة */
+    /* التحقق */
 
     if (!cart.length) {
 
         alert(
-            "🛒 السلة فارغة! ارجع إلى المتجر وأضف منتجًا أولاً."
+            "🛒 السلة فارغة! أضف منتجًا أولاً."
         );
 
         return;
     }
 
 
-    /* البيانات */
-
     if (
         !name ||
         !phone ||
-        !address ||
-        !wilaya
+        !wilaya ||
+        !address
     ) {
 
         alert(
@@ -628,7 +457,6 @@ async function confirmOrder() {
 
     let total = 0;
 
-
     cart.forEach(function(item) {
 
         total +=
@@ -638,25 +466,10 @@ async function confirmOrder() {
     });
 
 
-    /* بيانات الطلب */
-
-    const orderData = {
-
-        customer_name: name,
-
-        phone: phone,
-
-        address: address,
-
-        wilaya: wilaya,
-
-        items: cart,
-
-        total: total,
-
-        status: "new"
-
-    };
+    const button =
+        document.getElementById(
+            "confirmOrderButton"
+        );
 
 
     button.disabled = true;
@@ -692,8 +505,23 @@ async function confirmOrder() {
 
                     },
 
-                    body:
-                        JSON.stringify(orderData)
+                    body: JSON.stringify({
+
+                        customer_name: name,
+
+                        phone: phone,
+
+                        address: address,
+
+                        wilaya: wilaya,
+
+                        items: cart,
+
+                        total: total,
+
+                        status: "جديد"
+
+                    })
 
                 }
             );
@@ -701,16 +529,17 @@ async function confirmOrder() {
 
         if (!response.ok) {
 
-            const message =
+            const errorText =
                 await response.text();
 
             console.error(
-                "Supabase:",
-                message
+                "Supabase Error:",
+                errorText
             );
 
-            throw new Error(message);
-
+            throw new Error(
+                "فشل إرسال الطلب"
+            );
         }
 
 
@@ -721,85 +550,55 @@ async function confirmOrder() {
         );
 
 
-        cart = [];
-
-
-        displayOrder();
-
-
-        success.style.display =
-            "block";
-
-
-        button.textContent =
-            "✅ تم إرسال الطلب بنجاح";
-
-
-        document
-            .getElementById("checkoutForm")
-            .reset();
-
-
-        window.scrollTo({
-
-            top: 0,
-
-            behavior: "smooth"
-
-        });
-
-
-    } catch (err) {
-
-        console.error(
-            "Order error:",
-            err
+        alert(
+            "✅ تم إرسال طلبك بنجاح!\n\n" +
+            "شكرًا لك " +
+            name +
+            " ❤️"
         );
 
 
-        errorBox.textContent =
-            "❌ لم يتم إرسال الطلب. تأكد من إعداد جدول orders وRLS في Supabase.";
+        window.location.href =
+            "index.html";
 
 
-        errorBox.style.display =
-            "block";
+    } catch (error) {
+
+        console.error(error);
+
+
+        alert(
+            "❌ حدث خطأ أثناء إرسال الطلب.\n\n" +
+            "تأكد من اتصال الإنترنت ثم حاول مرة أخرى."
+        );
 
 
         button.disabled = false;
 
-
         button.textContent =
-            "✅ تأكيد الطلب";
-
+            "✅ تأكيد وإرسال الطلب";
     }
 
 }
 
 
-/* ========================================
-   تشغيل
-======================================== */
+/* =====================================
+   تشغيل الصفحة
+===================================== */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function() {
+document
+    .getElementById(
+        "confirmOrderButton"
+    )
+    .addEventListener(
+        "click",
+        confirmOrder
+    );
 
-        displayOrder();
 
-
-        document
-            .getElementById("confirmButton")
-            .addEventListener(
-                "click",
-                confirmOrder
-            );
-
-    }
-);
+renderOrder();
 
 </script>
 
 </body>
-
 </html>
-```
