@@ -32,11 +32,9 @@
 
     .checkout-title p {
         color: #00a8ff;
-        margin-bottom: 8px;
     }
 
     .checkout-title h1 {
-        margin: 0;
         font-size: 35px;
     }
 
@@ -94,10 +92,6 @@
         border-bottom: 1px solid #334955;
     }
 
-    .order-item:last-child {
-        border-bottom: none;
-    }
-
     .order-item-name {
         font-weight: bold;
     }
@@ -111,13 +105,11 @@
     .order-item-price {
         color: #00a8ff;
         font-weight: bold;
-        white-space: nowrap;
     }
 
     .total-box {
         display: flex;
         justify-content: space-between;
-        align-items: center;
         margin-top: 20px;
         padding-top: 20px;
         border-top: 2px solid #334955;
@@ -140,24 +132,21 @@
         font-size: 18px;
         font-weight: bold;
         cursor: pointer;
-        transition: 0.3s;
     }
 
     .confirm-button:hover {
         background: #008ed6;
-        transform: translateY(-2px);
     }
 
     .confirm-button:disabled {
         opacity: 0.6;
         cursor: not-allowed;
-        transform: none;
     }
 
     .back-button {
         display: block;
         width: fit-content;
-        margin: 25px auto 0;
+        margin: 25px auto;
         color: #00a8ff;
         text-decoration: none;
     }
@@ -168,46 +157,25 @@
         padding: 20px;
     }
 
-    .success-message {
+    .success-message,
+    .error-message {
         display: none;
+        padding: 18px;
+        border-radius: 12px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .success-message {
         background: #123d2a;
         border: 1px solid #1f8f5f;
         color: #b8ffd9;
-        padding: 18px;
-        border-radius: 12px;
-        text-align: center;
-        margin-bottom: 20px;
     }
 
     .error-message {
-        display: none;
         background: #451b1b;
         border: 1px solid #d64545;
         color: #ffd0d0;
-        padding: 18px;
-        border-radius: 12px;
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    @media (max-width: 600px) {
-        .checkout-page {
-            margin: 25px auto;
-            padding: 15px;
-        }
-
-        .checkout-box {
-            padding: 20px;
-        }
-
-        .checkout-title h1 {
-            font-size: 28px;
-        }
-
-        .order-item {
-            align-items: flex-start;
-            flex-direction: column;
-        }
     }
 </style>
 ```
@@ -229,8 +197,9 @@
 </div>
 
 <div id="errorMessage" class="error-message">
-    ❌ حدث خطأ أثناء إرسال الطلب. حاول مرة أخرى.
+    ❌ حدث خطأ أثناء إرسال الطلب.
 </div>
+
 
 <!-- معلومات الزبون -->
 
@@ -241,7 +210,6 @@
     <form id="checkoutForm">
 
         <div class="form-group">
-
             <label for="customerName">
                 الاسم الكامل
             </label>
@@ -252,11 +220,10 @@
                 placeholder="أدخل اسمك الكامل"
                 required
             >
-
         </div>
 
-        <div class="form-group">
 
+        <div class="form-group">
             <label for="phone">
                 رقم الهاتف
             </label>
@@ -267,11 +234,10 @@
                 placeholder="مثال: 0550000000"
                 required
             >
-
         </div>
 
-        <div class="form-group">
 
+        <div class="form-group">
             <label for="address">
                 العنوان
             </label>
@@ -281,11 +247,10 @@
                 placeholder="أدخل عنوانك بالتفصيل"
                 required
             ></textarea>
-
         </div>
 
-        <div class="form-group">
 
+        <div class="form-group">
             <label for="wilaya">
                 الولاية
             </label>
@@ -296,7 +261,6 @@
                 placeholder="مثال: باتنة"
                 required
             >
-
         </div>
 
     </form>
@@ -310,13 +274,7 @@
 
     <h2>🛒 ملخص الطلب</h2>
 
-    <div id="orderItems">
-
-        <div class="empty-order">
-            جاري تحميل الطلب...
-        </div>
-
-    </div>
+    <div id="orderItems"></div>
 
     <div class="total-box">
 
@@ -336,7 +294,7 @@
 </div>
 
 
-<!-- تأكيد الطلب -->
+<!-- تأكيد -->
 
 <div class="checkout-box">
 
@@ -361,357 +319,335 @@
 
 <script>
 
-    // ========================================
-    // إعداد Supabase
-    // ========================================
+const SUPABASE_URL =
+    "https://asnuclplpvvozslziqjc.supabase.co";
 
-    const SUPABASE_URL =
-        "https://asnuclplpvvozslziqjc.supabase.co";
-
-    const SUPABASE_KEY =
-        "sb_publishable_dRKgnlRt6KzMOaeZV8e6Gg_Txxa5OZV";
+const SUPABASE_KEY =
+    "sb_publishable_dRKgnlRt6KzMOaeZV8e6Gg_Txxa5OZV";
 
 
-    // ========================================
-    // قراءة السلة
-    // ========================================
+// ========================================
+// قراءة السلة الصحيحة
+// ========================================
 
-    let cart =
-        JSON.parse(localStorage.getItem("cart")) || [];
-
-
-    // ========================================
-    // عرض الطلب
-    // ========================================
-
-    function displayOrder() {
-
-        const orderItems =
-            document.getElementById("orderItems");
-
-        const orderTotal =
-            document.getElementById("orderTotal");
+let cart =
+    JSON.parse(
+        localStorage.getItem("style_checkout_cart") || "[]"
+    );
 
 
-        if (cart.length === 0) {
+// ========================================
+// عرض الطلب
+// ========================================
 
-            orderItems.innerHTML = `
-                <div class="empty-order">
-                    🛒 لا توجد منتجات في السلة.
-                </div>
-            `;
+function displayOrder() {
 
-            orderTotal.textContent = "0 دج";
+    const orderItems =
+        document.getElementById("orderItems");
 
-            return;
-        }
-
-
-        let total = 0;
+    const orderTotal =
+        document.getElementById("orderTotal");
 
 
-        orderItems.innerHTML = "";
+    if (!cart.length) {
 
+        orderItems.innerHTML = `
+            <div class="empty-order">
+                🛒 لا توجد منتجات في الطلب.
+            </div>
+        `;
 
-        cart.forEach(function(item) {
+        orderTotal.textContent = "0 دج";
 
-            const quantity =
-                Number(item.quantity) || 1;
-
-
-            const price =
-                Number(item.price) || 0;
-
-
-            const itemTotal =
-                price * quantity;
-
-
-            total += itemTotal;
-
-
-            const div =
-                document.createElement("div");
-
-
-            div.className = "order-item";
-
-
-            div.innerHTML = `
-
-                <div>
-
-                    <div class="order-item-name">
-                        ${item.name}
-                    </div>
-
-                    <div class="order-item-details">
-
-                        المقاس:
-                        ${item.size || "غير محدد"}
-
-                        |
-
-                        الكمية:
-                        ${quantity}
-
-                    </div>
-
-                </div>
-
-                <div class="order-item-price">
-
-                    ${itemTotal} دج
-
-                </div>
-
-            `;
-
-
-            orderItems.appendChild(div);
-
-        });
-
-
-        orderTotal.textContent =
-            total + " دج";
+        return;
     }
 
 
-    // ========================================
-    // إرسال الطلب إلى Supabase
-    // ========================================
+    let total = 0;
 
-    async function confirmOrder() {
-
-        const name =
-            document
-                .getElementById("customerName")
-                .value
-                .trim();
+    orderItems.innerHTML = "";
 
 
-        const phone =
-            document
-                .getElementById("phone")
-                .value
-                .trim();
+    cart.forEach(function(item) {
+
+        const quantity =
+            Number(item.qty) || 1;
+
+        const price =
+            Number(item.price) || 0;
+
+        const itemTotal =
+            price * quantity;
+
+        total += itemTotal;
 
 
-        const address =
-            document
-                .getElementById("address")
-                .value
-                .trim();
+        const div =
+            document.createElement("div");
+
+        div.className = "order-item";
 
 
-        const wilaya =
-            document
-                .getElementById("wilaya")
-                .value
-                .trim();
+        div.innerHTML = `
+
+            <div>
+
+                <div class="order-item-name">
+                    ${item.name}
+                </div>
+
+                <div class="order-item-details">
+
+                    المقاس:
+                    ${item.size}
+
+                    |
+
+                    الكمية:
+                    ${quantity}
+
+                </div>
+
+            </div>
+
+            <div class="order-item-price">
+
+                ${itemTotal.toLocaleString("fr-FR")} دج
+
+            </div>
+
+        `;
 
 
-        const button =
-            document.getElementById("confirmButton");
+        orderItems.appendChild(div);
+
+    });
 
 
-        const successMessage =
-            document.getElementById("successMessage");
+    orderTotal.textContent =
+        total.toLocaleString("fr-FR") + " دج";
+}
 
 
-        const errorMessage =
-            document.getElementById("errorMessage");
+// ========================================
+// تأكيد الطلب
+// ========================================
+
+async function confirmOrder() {
+
+    const name =
+        document
+            .getElementById("customerName")
+            .value
+            .trim();
 
 
-        successMessage.style.display = "none";
-        errorMessage.style.display = "none";
+    const phone =
+        document
+            .getElementById("phone")
+            .value
+            .trim();
 
 
-        // التحقق من السلة
+    const address =
+        document
+            .getElementById("address")
+            .value
+            .trim();
 
-        if (cart.length === 0) {
 
-            alert(
-                "🛒 السلة فارغة! أضف منتجًا أولاً."
+    const wilaya =
+        document
+            .getElementById("wilaya")
+            .value
+            .trim();
+
+
+    const button =
+        document.getElementById("confirmButton");
+
+
+    const success =
+        document.getElementById("successMessage");
+
+
+    const error =
+        document.getElementById("errorMessage");
+
+
+    success.style.display = "none";
+    error.style.display = "none";
+
+
+    if (!cart.length) {
+
+        alert(
+            "🛒 لا توجد منتجات في الطلب."
+        );
+
+        return;
+    }
+
+
+    if (
+        !name ||
+        !phone ||
+        !address ||
+        !wilaya
+    ) {
+
+        alert(
+            "⚠️ يرجى ملء جميع معلومات الطلب."
+        );
+
+        return;
+    }
+
+
+    let total = 0;
+
+
+    cart.forEach(function(item) {
+
+        total +=
+            Number(item.price) *
+            Number(item.qty || 1);
+
+    });
+
+
+    const orderData = {
+
+        customer_name: name,
+
+        phone: phone,
+
+        address: address,
+
+        wilaya: wilaya,
+
+        items: cart,
+
+        total: total,
+
+        status: "new"
+
+    };
+
+
+    button.disabled = true;
+
+    button.textContent =
+        "⏳ جاري إرسال الطلب...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                SUPABASE_URL + "/rest/v1/orders",
+                {
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "apikey":
+                            SUPABASE_KEY,
+
+                        "Authorization":
+                            "Bearer " + SUPABASE_KEY,
+
+                        "Prefer":
+                            "return=minimal"
+                    },
+
+                    body:
+                        JSON.stringify(orderData)
+                }
             );
 
-            return;
+
+        if (!response.ok) {
+
+            const message =
+                await response.text();
+
+            console.error(
+                "Supabase:",
+                message
+            );
+
+            throw new Error(message);
         }
 
 
-        // التحقق من البيانات
+        // ========================================
+        // نجاح الطلب
+        // ========================================
 
-        if (
-            !name ||
-            !phone ||
-            !address ||
-            !wilaya
-        ) {
+        localStorage.removeItem(
+            "style_cart"
+        );
 
-            alert(
-                "⚠️ يرجى ملء جميع معلومات الطلب."
-            );
-
-            return;
-        }
+        localStorage.removeItem(
+            "style_checkout_cart"
+        );
 
 
-        // منع الضغط مرتين
+        cart = [];
 
-        button.disabled = true;
+
+        displayOrder();
+
+
+        success.style.display =
+            "block";
+
 
         button.textContent =
-            "⏳ جاري إرسال الطلب...";
+            "✅ تم إرسال الطلب بنجاح";
 
 
-        // حساب المجموع
+        document
+            .getElementById("checkoutForm")
+            .reset();
 
-        let total = 0;
 
-
-        cart.forEach(function(item) {
-
-            total +=
-                Number(item.price) *
-                Number(item.quantity || 1);
-
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
         });
 
 
-        // تجهيز البيانات
+    } catch (error) {
 
-        const orderData = {
-
-            customer_name: name,
-
-            phone: phone,
-
-            address: address,
-
-            wilaya: wilaya,
-
-            items: cart,
-
-            total: total,
-
-            status: "new"
-
-        };
+        console.error(error);
 
 
-        try {
-
-            const response =
-                await fetch(
-                    SUPABASE_URL + "/rest/v1/orders",
-                    {
-
-                        method: "POST",
-
-                        headers: {
-
-                            "Content-Type":
-                                "application/json",
-
-                            "apikey":
-                                SUPABASE_KEY,
-
-                            "Authorization":
-                                "Bearer " + SUPABASE_KEY,
-
-                            "Prefer":
-                                "return=minimal"
-
-                        },
-
-                        body:
-                            JSON.stringify(orderData)
-
-                    }
-                );
+        error.style.display =
+            "block";
 
 
-            if (!response.ok) {
-
-                const errorText =
-                    await response.text();
-
-                console.error(
-                    "Supabase Error:",
-                    errorText
-                );
-
-                throw new Error(
-                    "فشل إرسال الطلب"
-                );
-            }
+        button.disabled = false;
 
 
-            // نجاح
-
-            localStorage.removeItem("cart");
-
-            cart = [];
-
-
-            successMessage.style.display =
-                "block";
-
-
-            button.textContent =
-                "✅ تم إرسال الطلب";
-
-
-            document
-                .getElementById("checkoutForm")
-                .reset();
-
-
-            displayOrder();
-
-
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-
-
-        } catch (error) {
-
-            console.error(error);
-
-
-            errorMessage.style.display =
-                "block";
-
-
-            button.disabled = false;
-
-
-            button.textContent =
-                "✅ تأكيد الطلب";
-
-        }
-
+        button.textContent =
+            "✅ تأكيد الطلب";
     }
 
+}
 
-    // ========================================
-    // تشغيل الصفحة
-    // ========================================
 
-    document.addEventListener(
-        "DOMContentLoaded",
-        function() {
+// ========================================
+// تشغيل الصفحة
+// ========================================
 
-            displayOrder();
-
-        }
-    );
+displayOrder();
 
 </script>
 
 </body>
-
 </html>
