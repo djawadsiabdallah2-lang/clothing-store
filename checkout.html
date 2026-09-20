@@ -1,1 +1,717 @@
-<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>STYLE — إتمام الطلب</title><link rel="stylesheet" href="style.css"></head><body><header><div class="nav wrap"><a class="logo" href="index.html">STYLE<span>.</span></a><a href="index.html">← العودة للمتجر</a></div></header><main class="section"><div class="wrap" style="max-width:760px"><div class="product" style="padding:28px"><small>CHECKOUT</small><h1>إتمام الطلب</h1><form id="form"><div style="display:grid;gap:14px"><input required id="name" placeholder="الاسم الكامل"><input required id="phone" placeholder="رقم الهاتف"><select required id="wilaya"><option value="">اختر الولاية</option><option>الجزائر</option><option>البليدة</option><option>الوادي</option><option>قسنطينة</option><option>وهران</option><option>سطيف</option><option>عنابة</option><option>بسكرة</option></select><textarea required id="address" rows="4" placeholder="العنوان"></textarea></div><div id="summary" style="margin:25px 0"></div><button class="btn" style="width:100%">تأكيد الطلب</button></form><div id="ok" style="display:none;text-align:center;padding:35px"><h2 style="color:var(--lime)">✓ تم استلام طلبك</h2><p style="color:var(--muted)">شكرًا لاختيار STYLE.</p><a class="btn" href="index.html">العودة للمتجر</a></div></div></div></main><script>const c=JSON.parse(localStorage.getItem('style_checkout_cart')||'[]'),sum=document.getElementById('summary');let total=0;sum.innerHTML=c.length?c.map(x=>{total+=x.price*x.qty;return `<p>${x.name} — ${x.size} × ${x.qty} <b style="float:left">${(x.price*x.qty).toLocaleString('fr-FR')} دج</b></p>`}).join(''):'السلة فارغة';document.getElementById('form').onsubmit=e=>{e.preventDefault();if(!c.length)return;const orders=JSON.parse(localStorage.getItem('style_orders')||'[]');orders.push({id:'ST-'+Date.now(),name:name.value,phone:phone.value,wilaya:wilaya.value,address:address.value,items:c,total,date:new Date().toLocaleString('ar-DZ')});localStorage.setItem('style_orders',JSON.stringify(orders));localStorage.removeItem('style_cart');localStorage.removeItem('style_checkout_cart');document.getElementById('form').style.display='none';document.getElementById('ok').style.display='block'}</script></body></html>
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>STYLE | إتمام الطلب</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #101820;
+        color: white;
+    }
+
+    .checkout-page {
+        max-width: 900px;
+        margin: 60px auto;
+        padding: 20px;
+    }
+
+    .checkout-title {
+        text-align: center;
+        margin-bottom: 35px;
+    }
+
+    .checkout-title p {
+        color: #00a8ff;
+        margin-bottom: 8px;
+    }
+
+    .checkout-title h1 {
+        margin: 0;
+        font-size: 35px;
+    }
+
+    .checkout-box {
+        background: #182631;
+        border-radius: 18px;
+        padding: 30px;
+        margin-bottom: 25px;
+    }
+
+    .checkout-box h2 {
+        margin-top: 0;
+        margin-bottom: 25px;
+    }
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 14px;
+        border: 1px solid #334955;
+        border-radius: 10px;
+        background: #101820;
+        color: white;
+        font-size: 16px;
+        outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        border-color: #00a8ff;
+    }
+
+    .form-group textarea {
+        min-height: 110px;
+        resize: vertical;
+    }
+
+    .order-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        padding: 15px 0;
+        border-bottom: 1px solid #334955;
+    }
+
+    .order-item:last-child {
+        border-bottom: none;
+    }
+
+    .order-item-name {
+        font-weight: bold;
+    }
+
+    .order-item-details {
+        color: #aebbc4;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+    .order-item-price {
+        color: #00a8ff;
+        font-weight: bold;
+        white-space: nowrap;
+    }
+
+    .total-box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 2px solid #334955;
+        font-size: 20px;
+    }
+
+    .total-price {
+        color: #00a8ff;
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    .confirm-button {
+        width: 100%;
+        padding: 16px;
+        border: none;
+        border-radius: 12px;
+        background: #00a8ff;
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .confirm-button:hover {
+        background: #008ed6;
+        transform: translateY(-2px);
+    }
+
+    .confirm-button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    .back-button {
+        display: block;
+        width: fit-content;
+        margin: 25px auto 0;
+        color: #00a8ff;
+        text-decoration: none;
+    }
+
+    .empty-order {
+        text-align: center;
+        color: #aebbc4;
+        padding: 20px;
+    }
+
+    .success-message {
+        display: none;
+        background: #123d2a;
+        border: 1px solid #1f8f5f;
+        color: #b8ffd9;
+        padding: 18px;
+        border-radius: 12px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .error-message {
+        display: none;
+        background: #451b1b;
+        border: 1px solid #d64545;
+        color: #ffd0d0;
+        padding: 18px;
+        border-radius: 12px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    @media (max-width: 600px) {
+        .checkout-page {
+            margin: 25px auto;
+            padding: 15px;
+        }
+
+        .checkout-box {
+            padding: 20px;
+        }
+
+        .checkout-title h1 {
+            font-size: 28px;
+        }
+
+        .order-item {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+<main class="checkout-page">
+
+```
+<div class="checkout-title">
+    <p>STYLE 👕</p>
+    <h1>إتمام الطلب</h1>
+</div>
+
+<div id="successMessage" class="success-message">
+    ✅ تم إرسال طلبك بنجاح! شكرًا لثقتك في STYLE ❤️
+</div>
+
+<div id="errorMessage" class="error-message">
+    ❌ حدث خطأ أثناء إرسال الطلب. حاول مرة أخرى.
+</div>
+
+<!-- معلومات الزبون -->
+
+<div class="checkout-box">
+
+    <h2>👤 معلومات الزبون</h2>
+
+    <form id="checkoutForm">
+
+        <div class="form-group">
+
+            <label for="customerName">
+                الاسم الكامل
+            </label>
+
+            <input
+                type="text"
+                id="customerName"
+                placeholder="أدخل اسمك الكامل"
+                required
+            >
+
+        </div>
+
+        <div class="form-group">
+
+            <label for="phone">
+                رقم الهاتف
+            </label>
+
+            <input
+                type="tel"
+                id="phone"
+                placeholder="مثال: 0550000000"
+                required
+            >
+
+        </div>
+
+        <div class="form-group">
+
+            <label for="address">
+                العنوان
+            </label>
+
+            <textarea
+                id="address"
+                placeholder="أدخل عنوانك بالتفصيل"
+                required
+            ></textarea>
+
+        </div>
+
+        <div class="form-group">
+
+            <label for="wilaya">
+                الولاية
+            </label>
+
+            <input
+                type="text"
+                id="wilaya"
+                placeholder="مثال: باتنة"
+                required
+            >
+
+        </div>
+
+    </form>
+
+</div>
+
+
+<!-- ملخص الطلب -->
+
+<div class="checkout-box">
+
+    <h2>🛒 ملخص الطلب</h2>
+
+    <div id="orderItems">
+
+        <div class="empty-order">
+            جاري تحميل الطلب...
+        </div>
+
+    </div>
+
+    <div class="total-box">
+
+        <span>
+            المجموع:
+        </span>
+
+        <span
+            id="orderTotal"
+            class="total-price"
+        >
+            0 دج
+        </span>
+
+    </div>
+
+</div>
+
+
+<!-- تأكيد الطلب -->
+
+<div class="checkout-box">
+
+    <button
+        type="button"
+        id="confirmButton"
+        class="confirm-button"
+        onclick="confirmOrder()"
+    >
+        ✅ تأكيد الطلب
+    </button>
+
+</div>
+
+
+<a href="index.html" class="back-button">
+    ← العودة إلى المتجر
+</a>
+```
+
+</main>
+
+<script>
+
+    // ========================================
+    // إعداد Supabase
+    // ========================================
+
+    const SUPABASE_URL =
+        "https://asnuclplpvvozslziqjc.supabase.co";
+
+    const SUPABASE_KEY =
+        "sb_publishable_dRKgnlRt6KzMOaeZV8e6Gg_Txxa5OZV";
+
+
+    // ========================================
+    // قراءة السلة
+    // ========================================
+
+    let cart =
+        JSON.parse(localStorage.getItem("cart")) || [];
+
+
+    // ========================================
+    // عرض الطلب
+    // ========================================
+
+    function displayOrder() {
+
+        const orderItems =
+            document.getElementById("orderItems");
+
+        const orderTotal =
+            document.getElementById("orderTotal");
+
+
+        if (cart.length === 0) {
+
+            orderItems.innerHTML = `
+                <div class="empty-order">
+                    🛒 لا توجد منتجات في السلة.
+                </div>
+            `;
+
+            orderTotal.textContent = "0 دج";
+
+            return;
+        }
+
+
+        let total = 0;
+
+
+        orderItems.innerHTML = "";
+
+
+        cart.forEach(function(item) {
+
+            const quantity =
+                Number(item.quantity) || 1;
+
+
+            const price =
+                Number(item.price) || 0;
+
+
+            const itemTotal =
+                price * quantity;
+
+
+            total += itemTotal;
+
+
+            const div =
+                document.createElement("div");
+
+
+            div.className = "order-item";
+
+
+            div.innerHTML = `
+
+                <div>
+
+                    <div class="order-item-name">
+                        ${item.name}
+                    </div>
+
+                    <div class="order-item-details">
+
+                        المقاس:
+                        ${item.size || "غير محدد"}
+
+                        |
+
+                        الكمية:
+                        ${quantity}
+
+                    </div>
+
+                </div>
+
+                <div class="order-item-price">
+
+                    ${itemTotal} دج
+
+                </div>
+
+            `;
+
+
+            orderItems.appendChild(div);
+
+        });
+
+
+        orderTotal.textContent =
+            total + " دج";
+    }
+
+
+    // ========================================
+    // إرسال الطلب إلى Supabase
+    // ========================================
+
+    async function confirmOrder() {
+
+        const name =
+            document
+                .getElementById("customerName")
+                .value
+                .trim();
+
+
+        const phone =
+            document
+                .getElementById("phone")
+                .value
+                .trim();
+
+
+        const address =
+            document
+                .getElementById("address")
+                .value
+                .trim();
+
+
+        const wilaya =
+            document
+                .getElementById("wilaya")
+                .value
+                .trim();
+
+
+        const button =
+            document.getElementById("confirmButton");
+
+
+        const successMessage =
+            document.getElementById("successMessage");
+
+
+        const errorMessage =
+            document.getElementById("errorMessage");
+
+
+        successMessage.style.display = "none";
+        errorMessage.style.display = "none";
+
+
+        // التحقق من السلة
+
+        if (cart.length === 0) {
+
+            alert(
+                "🛒 السلة فارغة! أضف منتجًا أولاً."
+            );
+
+            return;
+        }
+
+
+        // التحقق من البيانات
+
+        if (
+            !name ||
+            !phone ||
+            !address ||
+            !wilaya
+        ) {
+
+            alert(
+                "⚠️ يرجى ملء جميع معلومات الطلب."
+            );
+
+            return;
+        }
+
+
+        // منع الضغط مرتين
+
+        button.disabled = true;
+
+        button.textContent =
+            "⏳ جاري إرسال الطلب...";
+
+
+        // حساب المجموع
+
+        let total = 0;
+
+
+        cart.forEach(function(item) {
+
+            total +=
+                Number(item.price) *
+                Number(item.quantity || 1);
+
+        });
+
+
+        // تجهيز البيانات
+
+        const orderData = {
+
+            customer_name: name,
+
+            phone: phone,
+
+            address: address,
+
+            wilaya: wilaya,
+
+            items: cart,
+
+            total: total,
+
+            status: "new"
+
+        };
+
+
+        try {
+
+            const response =
+                await fetch(
+                    SUPABASE_URL + "/rest/v1/orders",
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json",
+
+                            "apikey":
+                                SUPABASE_KEY,
+
+                            "Authorization":
+                                "Bearer " + SUPABASE_KEY,
+
+                            "Prefer":
+                                "return=minimal"
+
+                        },
+
+                        body:
+                            JSON.stringify(orderData)
+
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                const errorText =
+                    await response.text();
+
+                console.error(
+                    "Supabase Error:",
+                    errorText
+                );
+
+                throw new Error(
+                    "فشل إرسال الطلب"
+                );
+            }
+
+
+            // نجاح
+
+            localStorage.removeItem("cart");
+
+            cart = [];
+
+
+            successMessage.style.display =
+                "block";
+
+
+            button.textContent =
+                "✅ تم إرسال الطلب";
+
+
+            document
+                .getElementById("checkoutForm")
+                .reset();
+
+
+            displayOrder();
+
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+
+        } catch (error) {
+
+            console.error(error);
+
+
+            errorMessage.style.display =
+                "block";
+
+
+            button.disabled = false;
+
+
+            button.textContent =
+                "✅ تأكيد الطلب";
+
+        }
+
+    }
+
+
+    // ========================================
+    // تشغيل الصفحة
+    // ========================================
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function() {
+
+            displayOrder();
+
+        }
+    );
+
+</script>
+
+</body>
+
+</html>
