@@ -1,1 +1,916 @@
-<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>STYLE — الإدارة</title><link rel="stylesheet" href="style.css"></head><body><main class="section"><div class="wrap" style="max-width:460px"><div class="product" style="padding:28px"><small>STYLE ADMIN</small><h1>دخول الإدارة</h1><p style="color:var(--muted)">لوحة خاصة بإدارة الطلبات.</p><input id="pass" type="password" placeholder="كلمة مرور الإدارة" style="width:100%;padding:13px;background:#0b0e13;border:1px solid var(--line);color:#fff;border-radius:10px"><button class="btn" style="width:100%;margin-top:12px" onclick="go()">دخول</button><p id="msg" style="color:#ff6574"></p></div></div></main><script>function go(){if(pass.value==='STYLE2026'){sessionStorage.setItem('style_admin','1');location.href='admin-dashboard.html'}else msg.textContent='كلمة المرور غير صحيحة'}</script></body></html>
+```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>لوحة الإدارة | الطلبات</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            font-family: Arial, sans-serif;
+
+            background: #101820;
+
+            color: white;
+        }
+
+
+        header {
+
+            background: #1b263b;
+
+            padding: 20px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            box-shadow:
+                0 2px 10px
+                rgba(0, 0, 0, 0.3);
+        }
+
+
+        header h1 {
+
+            margin: 0;
+
+            color: #00a8ff;
+
+            font-size: 24px;
+        }
+
+
+        #logoutButton {
+
+            background: #e63946;
+
+            color: white;
+
+            border: none;
+
+            padding: 10px 18px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-size: 15px;
+        }
+
+
+        #logoutButton:hover {
+
+            opacity: 0.85;
+        }
+
+
+        .container {
+
+            width: 95%;
+
+            max-width: 1200px;
+
+            margin: 30px auto;
+        }
+
+
+        .top-bar {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            margin-bottom: 25px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .top-bar h2 {
+
+            margin: 0;
+        }
+
+
+        #refreshButton {
+
+            background: #00a8ff;
+
+            color: white;
+
+            border: none;
+
+            padding: 11px 20px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-size: 15px;
+        }
+
+
+        #refreshButton:hover {
+
+            background: #008ed6;
+        }
+
+
+        #message {
+
+            text-align: center;
+
+            padding: 20px;
+
+            font-size: 17px;
+        }
+
+
+        .orders {
+
+            display: grid;
+
+            gap: 20px;
+        }
+
+
+        .order-card {
+
+            background: #182631;
+
+            border-radius: 14px;
+
+            padding: 20px;
+
+            border: 1px solid #263746;
+
+            box-shadow:
+                0 5px 15px
+                rgba(0, 0, 0, 0.2);
+        }
+
+
+        .order-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+
+            margin-bottom: 18px;
+
+            padding-bottom: 15px;
+
+            border-bottom:
+                1px solid #304250;
+        }
+
+
+        .order-id {
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+            color: #00a8ff;
+        }
+
+
+        .status {
+
+            padding: 7px 14px;
+
+            border-radius: 20px;
+
+            background: #263746;
+
+            font-size: 14px;
+        }
+
+
+        .customer-info {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(220px, 1fr)
+                );
+
+            gap: 12px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .info-box {
+
+            background: #101820;
+
+            padding: 13px;
+
+            border-radius: 8px;
+        }
+
+
+        .info-title {
+
+            color: #8fa3b5;
+
+            font-size: 13px;
+
+            margin-bottom: 5px;
+        }
+
+
+        .info-value {
+
+            font-size: 16px;
+
+            word-break: break-word;
+        }
+
+
+        .products-title {
+
+            color: #00a8ff;
+
+            font-size: 18px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .product {
+
+            background: #101820;
+
+            padding: 12px;
+
+            border-radius: 8px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .product-name {
+
+            font-weight: bold;
+
+            margin-bottom: 6px;
+        }
+
+
+        .product-details {
+
+            color: #b8c5cf;
+
+            font-size: 14px;
+        }
+
+
+        .total {
+
+            margin-top: 18px;
+
+            padding-top: 15px;
+
+            border-top:
+                1px solid #304250;
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+            color: #00a8ff;
+        }
+
+
+        .empty {
+
+            background: #182631;
+
+            padding: 40px;
+
+            border-radius: 12px;
+
+            text-align: center;
+
+            color: #b8c5cf;
+        }
+
+
+        @media (max-width: 600px) {
+
+            header {
+
+                flex-direction: column;
+
+                gap: 15px;
+            }
+
+
+            .container {
+
+                width: 92%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <header>
+
+        <h1>
+            🛒 لوحة إدارة الطلبات
+        </h1>
+
+
+        <button id="logoutButton">
+            تسجيل الخروج
+        </button>
+
+    </header>
+
+
+    <main class="container">
+
+
+        <div class="top-bar">
+
+            <h2>
+                📦 الطلبات الواردة
+            </h2>
+
+
+            <button id="refreshButton">
+                🔄 تحديث الطلبات
+            </button>
+
+        </div>
+
+
+        <div id="message">
+            جاري تحميل الطلبات...
+        </div>
+
+
+        <div
+            id="ordersContainer"
+            class="orders"
+        ></div>
+
+
+    </main>
+
+
+    <script>
+
+        // ==========================================
+        // إعداد Supabase
+        // ==========================================
+
+        const SUPABASE_URL =
+            "https://asnuclplpvvozslziqjc.supabase.co";
+
+
+        const SUPABASE_ANON_KEY =
+            "sb_publishable_dRKgnlRt6KzMOaeZV8e6Gg_Txxa5OZV";
+
+
+        const supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_ANON_KEY
+            );
+
+
+        // ==========================================
+        // التحقق من تسجيل الدخول
+        // ==========================================
+
+        async function checkUser() {
+
+            const {
+                data: {
+                    session
+                }
+            } =
+                await supabaseClient.auth.getSession();
+
+
+            if (!session) {
+
+                window.location.href =
+                    "admin-login.html";
+
+                return false;
+            }
+
+
+            return true;
+        }
+
+
+        // ==========================================
+        // تحميل الطلبات
+        // ==========================================
+
+        async function loadOrders() {
+
+            const message =
+                document.getElementById("message");
+
+
+            const container =
+                document.getElementById(
+                    "ordersContainer"
+                );
+
+
+            message.style.display = "block";
+
+            message.textContent =
+                "جاري تحميل الطلبات...";
+
+
+            container.innerHTML = "";
+
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient
+                    .from("orders")
+                    .select("*")
+                    .order(
+                        "created_at",
+                        {
+                            ascending: false
+                        }
+                    );
+
+
+            if (error) {
+
+                console.error(error);
+
+
+                message.textContent =
+                    "❌ حدث خطأ أثناء تحميل الطلبات: "
+                    + error.message;
+
+
+                return;
+            }
+
+
+            message.style.display = "none";
+
+
+            if (!data || data.length === 0) {
+
+                container.innerHTML = `
+
+                    <div class="empty">
+
+                        📭 لا توجد طلبات حاليًا
+
+                    </div>
+
+                `;
+
+                return;
+            }
+
+
+            data.forEach(order => {
+
+
+                let productsHTML = "";
+
+
+                // ==================================
+                // المنتجات
+                // ==================================
+
+                if (Array.isArray(order.items)) {
+
+
+                    order.items.forEach(item => {
+
+                        const name =
+                            item.name ||
+                            item.title ||
+                            "منتج";
+
+
+                        const quantity =
+                            item.quantity ||
+                            item.qty ||
+                            1;
+
+
+                        const size =
+                            item.size ||
+                            "غير محدد";
+
+
+                        const price =
+                            item.price ||
+                            0;
+
+
+                        productsHTML += `
+
+                            <div class="product">
+
+                                <div class="product-name">
+
+                                    ${escapeHTML(name)}
+
+                                </div>
+
+
+                                <div class="product-details">
+
+                                    الكمية:
+                                    ${quantity}
+
+                                    |
+
+                                    المقاس:
+                                    ${escapeHTML(
+                                        String(size)
+                                    )}
+
+                                    |
+
+                                    السعر:
+                                    ${price} دج
+
+                                </div>
+
+                            </div>
+
+                        `;
+
+                    });
+
+
+                } else {
+
+
+                    productsHTML = `
+
+                        <div class="product">
+
+                            ${escapeHTML(
+                                JSON.stringify(
+                                    order.items
+                                )
+                            )}
+
+                        </div>
+
+                    `;
+
+                }
+
+
+                // ==================================
+                // التاريخ
+                // ==================================
+
+                let dateText =
+                    "غير معروف";
+
+
+                if (order.created_at) {
+
+                    dateText =
+                        new Date(
+                            order.created_at
+                        ).toLocaleString(
+                            "ar-DZ"
+                        );
+                }
+
+
+                // ==================================
+                // بطاقة الطلب
+                // ==================================
+
+                const card =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                card.className =
+                    "order-card";
+
+
+                card.innerHTML = `
+
+                    <div class="order-header">
+
+                        <div class="order-id">
+
+                            الطلب #${order.id}
+
+                        </div>
+
+
+                        <div class="status">
+
+                            الحالة:
+
+                            ${escapeHTML(
+                                order.status ||
+                                "جديد"
+                            )}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="customer-info">
+
+
+                        <div class="info-box">
+
+                            <div class="info-title">
+
+                                👤 اسم الزبون
+
+                            </div>
+
+
+                            <div class="info-value">
+
+                                ${escapeHTML(
+                                    order.customer_name ||
+                                    "غير موجود"
+                                )}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="info-box">
+
+                            <div class="info-title">
+
+                                📱 رقم الهاتف
+
+                            </div>
+
+
+                            <div class="info-value">
+
+                                ${escapeHTML(
+                                    order.phone ||
+                                    "غير موجود"
+                                )}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="info-box">
+
+                            <div class="info-title">
+
+                                📍 الولاية
+
+                            </div>
+
+
+                            <div class="info-value">
+
+                                ${escapeHTML(
+                                    order.wilaya ||
+                                    "غير موجود"
+                                )}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="info-box">
+
+                            <div class="info-title">
+
+                                🏠 العنوان
+
+                            </div>
+
+
+                            <div class="info-value">
+
+                                ${escapeHTML(
+                                    order.address ||
+                                    "غير موجود"
+                                )}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="info-box">
+
+                            <div class="info-title">
+
+                                🕒 تاريخ الطلب
+
+                            </div>
+
+
+                            <div class="info-value">
+
+                                ${dateText}
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="products-title">
+
+                        🛍️ المنتجات
+
+                    </div>
+
+
+                    ${productsHTML}
+
+
+                    <div class="total">
+
+                        💰 المجموع:
+
+                        ${Number(
+                            order.total || 0
+                        ).toLocaleString("ar-DZ")}
+
+                        دج
+
+                    </div>
+
+                `;
+
+
+                container.appendChild(card);
+
+            });
+
+        }
+
+
+        // ==========================================
+        // حماية النصوص
+        // ==========================================
+
+        function escapeHTML(value) {
+
+            return String(value)
+
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
+        }
+
+
+        // ==========================================
+        // تسجيل الخروج
+        // ==========================================
+
+        document
+            .getElementById("logoutButton")
+            .addEventListener(
+                "click",
+                async function() {
+
+                    await supabaseClient
+                        .auth
+                        .signOut();
+
+
+                    window.location.href =
+                        "admin-login.html";
+
+                }
+            );
+
+
+        // ==========================================
+        // تحديث الطلبات
+        // ==========================================
+
+        document
+            .getElementById("refreshButton")
+            .addEventListener(
+                "click",
+                loadOrders
+            );
+
+
+        // ==========================================
+        // تشغيل لوحة الإدارة
+        // ==========================================
+
+        async function startAdmin() {
+
+            const loggedIn =
+                await checkUser();
+
+
+            if (!loggedIn) {
+
+                return;
+            }
+
+
+            await loadOrders();
+
+        }
+
+
+        startAdmin();
+
+    </script>
+
+</body>
+
+</html>
+```
