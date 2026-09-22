@@ -78,7 +78,7 @@
 
             gap: 15px;
 
-            margin-bottom: 25px;
+            margin-bottom: 20px;
 
             flex-wrap: wrap;
         }
@@ -106,14 +106,93 @@
             background: #008ed6;
         }
 
+        /* =====================================
+           البحث
+        ===================================== */
+
+        .search-box {
+            display: flex;
+
+            gap: 10px;
+
+            margin-bottom: 25px;
+
+            width: 100%;
+        }
+
+        #searchInput {
+            flex: 1;
+
+            padding: 14px 16px;
+
+            border-radius: 10px;
+
+            border: 1px solid #304250;
+
+            background: #182631;
+
+            color: white;
+
+            font-size: 16px;
+
+            outline: none;
+        }
+
+        #searchInput:focus {
+            border-color: #00a8ff;
+
+            box-shadow:
+                0 0 0 2px
+                rgba(0, 168, 255, 0.15);
+        }
+
+        #searchInput::placeholder {
+            color: #8fa3b5;
+        }
+
+        #clearSearchButton {
+            background: #263746;
+
+            color: white;
+
+            border: none;
+
+            padding: 0 18px;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            font-size: 15px;
+
+            white-space: nowrap;
+        }
+
+        #clearSearchButton:hover {
+            background: #344b5c;
+        }
+
+        #searchResult {
+            color: #8fa3b5;
+
+            font-size: 14px;
+
+            margin-top: -15px;
+
+            margin-bottom: 20px;
+        }
+
         #message {
             text-align: center;
+
             padding: 20px;
+
             font-size: 17px;
         }
 
         .orders {
             display: grid;
+
             gap: 20px;
         }
 
@@ -135,6 +214,7 @@
             display: flex;
 
             justify-content: space-between;
+
             align-items: center;
 
             gap: 10px;
@@ -162,7 +242,6 @@
         ===================================== */
 
         .status-select {
-
             padding: 9px 12px;
 
             border-radius: 8px;
@@ -186,27 +265,8 @@
 
         .status-select:disabled {
             opacity: 0.6;
+
             cursor: not-allowed;
-        }
-
-        .status-new {
-            border-color: #f1c40f;
-        }
-
-        .status-processing {
-            border-color: #3498db;
-        }
-
-        .status-shipped {
-            border-color: #9b59b6;
-        }
-
-        .status-completed {
-            border-color: #2ecc71;
-        }
-
-        .status-cancelled {
-            border-color: #e63946;
         }
 
         /* =====================================
@@ -214,7 +274,6 @@
         ===================================== */
 
         .customer-info {
-
             display: grid;
 
             grid-template-columns:
@@ -229,7 +288,6 @@
         }
 
         .info-box {
-
             background: #101820;
 
             padding: 13px;
@@ -238,7 +296,6 @@
         }
 
         .info-title {
-
             color: #8fa3b5;
 
             font-size: 13px;
@@ -247,7 +304,6 @@
         }
 
         .info-value {
-
             font-size: 16px;
 
             word-break: break-word;
@@ -258,7 +314,6 @@
         ===================================== */
 
         .products-title {
-
             color: #00a8ff;
 
             font-size: 18px;
@@ -267,7 +322,6 @@
         }
 
         .product {
-
             background: #101820;
 
             padding: 12px;
@@ -278,14 +332,12 @@
         }
 
         .product-name {
-
             font-weight: bold;
 
             margin-bottom: 6px;
         }
 
         .product-details {
-
             color: #b8c5cf;
 
             font-size: 14px;
@@ -296,7 +348,6 @@
         ===================================== */
 
         .total {
-
             margin-top: 18px;
 
             padding-top: 15px;
@@ -316,7 +367,6 @@
         ===================================== */
 
         .delete-button {
-
             width: 100%;
 
             margin-top: 18px;
@@ -339,23 +389,20 @@
         }
 
         .delete-button:hover {
-
             background: #c92f3c;
         }
 
         .delete-button:disabled {
-
             opacity: 0.6;
 
             cursor: not-allowed;
         }
 
         /* =====================================
-           فارغ
+           لا توجد نتائج
         ===================================== */
 
         .empty {
-
             background: #182631;
 
             padding: 40px;
@@ -374,7 +421,6 @@
         @media (max-width: 600px) {
 
             header {
-
                 flex-direction: column;
 
                 gap: 15px;
@@ -383,39 +429,41 @@
             }
 
             .container {
-
                 width: 92%;
 
                 margin-top: 20px;
             }
 
             .order-card {
-
                 padding: 15px;
             }
 
             .order-header {
-
                 align-items: stretch;
 
                 flex-direction: column;
             }
 
             .status-select {
-
                 width: 100%;
             }
 
             .top-bar {
-
                 align-items: stretch;
 
                 flex-direction: column;
             }
 
             #refreshButton {
-
                 width: 100%;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            #clearSearchButton {
+                padding: 12px;
             }
 
         }
@@ -457,6 +505,32 @@
     </div>
 
 
+    <!-- =====================================
+         البحث
+    ====================================== -->
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="🔎 ابحث باسم الزبون أو رقم الهاتف..."
+            autocomplete="off"
+        >
+
+        <button id="clearSearchButton">
+            ✖ مسح
+        </button>
+
+    </div>
+
+
+    <div
+        id="searchResult"
+        style="display: none;"
+    ></div>
+
+
     <div id="message">
         جاري تحميل الطلبات...
     </div>
@@ -494,6 +568,13 @@ const supabaseClient =
 
 
 // ==========================================
+// تخزين جميع الطلبات
+// ==========================================
+
+let allOrders = [];
+
+
+// ==========================================
 // التحقق من تسجيل الدخول
 // ==========================================
 
@@ -521,7 +602,7 @@ async function checkUser() {
 
 
 // ==========================================
-// أسماء الحالات
+// الحالات
 // ==========================================
 
 const statusOptions = [
@@ -592,6 +673,7 @@ function createStatusSelect(order) {
         ) {
 
             option.selected = true;
+
         }
 
 
@@ -630,7 +712,7 @@ async function updateOrderStatus(
         select.value;
 
 
-    const oldText =
+    const selectedText =
         select.options[
             select.selectedIndex
         ].textContent;
@@ -641,7 +723,7 @@ async function updateOrderStatus(
             "هل تريد تغيير حالة الطلب #"
             + orderId
             + " إلى:\n\n"
-            + oldText
+            + selectedText
             + " ؟"
         );
 
@@ -665,7 +747,10 @@ async function updateOrderStatus(
             .update({
                 status: newStatus
             })
-            .eq("id", orderId);
+            .eq(
+                "id",
+                orderId
+            );
 
 
     if (error) {
@@ -685,14 +770,11 @@ async function updateOrderStatus(
     }
 
 
-    select.disabled = false;
-
-
     alert(
         "✅ تم تحديث حالة الطلب #"
         + orderId
         + " إلى "
-        + oldText
+        + selectedText
     );
 
 
@@ -702,7 +784,7 @@ async function updateOrderStatus(
 
 
 // ==========================================
-// تحميل الطلبات
+// تحميل الطلبات من Supabase
 // ==========================================
 
 async function loadOrders() {
@@ -760,20 +842,97 @@ async function loadOrders() {
     }
 
 
+    allOrders =
+        data || [];
+
+
     message.style.display =
         "none";
 
 
+    displayOrders(
+        allOrders
+    );
+
+}
+
+
+// ==========================================
+// عرض الطلبات
+// ==========================================
+
+function displayOrders(
+    orders
+) {
+
+    const container =
+        document.getElementById(
+            "ordersContainer"
+        );
+
+
+    const searchResult =
+        document.getElementById(
+            "searchResult"
+        );
+
+
+    container.innerHTML =
+        "";
+
+
+    // ======================================
+    // عدد النتائج
+    // ======================================
+
+    const searchInput =
+        document.getElementById(
+            "searchInput"
+        );
+
+
+    const searchText =
+        searchInput.value
+            .trim();
+
+
+    if (searchText !== "") {
+
+        searchResult.style.display =
+            "block";
+
+
+        searchResult.textContent =
+            "🔎 تم العثور على "
+            + orders.length
+            + " طلب";
+
+    } else {
+
+        searchResult.style.display =
+            "none";
+
+    }
+
+
+    // ======================================
+    // لا توجد طلبات
+    // ======================================
+
     if (
-        !data ||
-        data.length === 0
+        !orders ||
+        orders.length === 0
     ) {
 
         container.innerHTML = `
 
             <div class="empty">
 
-                📭 لا توجد طلبات حاليًا
+                ${
+                    searchText
+                    ? "🔎 لا توجد نتائج مطابقة للبحث"
+                    : "📭 لا توجد طلبات حاليًا"
+                }
 
             </div>
 
@@ -783,7 +942,11 @@ async function loadOrders() {
     }
 
 
-    data.forEach(order => {
+    // ======================================
+    // إنشاء البطاقات
+    // ======================================
+
+    orders.forEach(order => {
 
 
         let productsHTML =
@@ -799,7 +962,6 @@ async function loadOrders() {
                 order.items
             )
         ) {
-
 
             order.items.forEach(
                 item => {
@@ -838,7 +1000,6 @@ async function loadOrders() {
 
                             </div>
 
-
                             <div class="product-details">
 
                                 الكمية:
@@ -848,9 +1009,7 @@ async function loadOrders() {
 
                                 المقاس:
                                 ${escapeHTML(
-                                    String(
-                                        size
-                                    )
+                                    String(size)
                                 )}
 
                                 |
@@ -867,9 +1026,7 @@ async function loadOrders() {
                 }
             );
 
-
         } else {
-
 
             productsHTML = `
 
@@ -896,9 +1053,7 @@ async function loadOrders() {
             "غير معروف";
 
 
-        if (
-            order.created_at
-        ) {
+        if (order.created_at) {
 
             dateText =
                 new Date(
@@ -906,11 +1061,12 @@ async function loadOrders() {
                 ).toLocaleString(
                     "ar-DZ"
                 );
+
         }
 
 
         // ==================================
-        // البطاقة
+        // إنشاء البطاقة
         // ==================================
 
         const card =
@@ -923,7 +1079,9 @@ async function loadOrders() {
             "order-card";
 
 
-        // الجزء العلوي
+        // ==================================
+        // الرأس
+        // ==================================
 
         const header =
             document.createElement(
@@ -965,17 +1123,20 @@ async function loadOrders() {
         );
 
 
-        // باقي البطاقة
-
         card.appendChild(
             header
         );
 
 
-        card.innerHTML += `
+        // ==================================
+        // باقي البطاقة
+        // ==================================
+
+        card.insertAdjacentHTML(
+            "beforeend",
+            `
 
             <div class="customer-info">
-
 
                 <div class="info-box">
 
@@ -984,12 +1145,10 @@ async function loadOrders() {
                     </div>
 
                     <div class="info-value">
-
                         ${escapeHTML(
                             order.customer_name ||
                             "غير موجود"
                         )}
-
                     </div>
 
                 </div>
@@ -1002,12 +1161,10 @@ async function loadOrders() {
                     </div>
 
                     <div class="info-value">
-
                         ${escapeHTML(
                             order.phone ||
                             "غير موجود"
                         )}
-
                     </div>
 
                 </div>
@@ -1020,12 +1177,10 @@ async function loadOrders() {
                     </div>
 
                     <div class="info-value">
-
                         ${escapeHTML(
                             order.wilaya ||
                             "غير موجود"
                         )}
-
                     </div>
 
                 </div>
@@ -1038,12 +1193,10 @@ async function loadOrders() {
                     </div>
 
                     <div class="info-value">
-
                         ${escapeHTML(
                             order.address ||
                             "غير موجود"
                         )}
-
                     </div>
 
                 </div>
@@ -1056,21 +1209,16 @@ async function loadOrders() {
                     </div>
 
                     <div class="info-value">
-
                         ${dateText}
-
                     </div>
 
                 </div>
-
 
             </div>
 
 
             <div class="products-title">
-
                 🛍️ المنتجات
-
             </div>
 
 
@@ -1094,26 +1242,14 @@ async function loadOrders() {
 
             <button
                 class="delete-button"
-                data-id="${order.id}"
             >
 
                 🗑️ حذف الطلب
 
             </button>
 
-        `;
-
-
-        // إعادة إضافة قائمة الحالة
-        // لأنها أزيلت عند استخدام innerHTML
-
-        card
-            .querySelector(
-                ".order-header"
-            )
-            .appendChild(
-                statusSelect
-            );
+            `
+        );
 
 
         // ==================================
@@ -1144,6 +1280,99 @@ async function loadOrders() {
         );
 
     });
+
+}
+
+
+// ==========================================
+// البحث
+// ==========================================
+
+function searchOrders() {
+
+    const input =
+        document.getElementById(
+            "searchInput"
+        );
+
+
+    const searchText =
+        input.value
+            .trim()
+            .toLowerCase();
+
+
+    // إذا كان البحث فارغًا
+    if (searchText === "") {
+
+        displayOrders(
+            allOrders
+        );
+
+        return;
+    }
+
+
+    const filteredOrders =
+        allOrders.filter(
+            order => {
+
+                const name =
+                    String(
+                        order.customer_name ||
+                        ""
+                    ).toLowerCase();
+
+
+                const phone =
+                    String(
+                        order.phone ||
+                        ""
+                    ).toLowerCase();
+
+
+                return (
+                    name.includes(
+                        searchText
+                    ) ||
+                    phone.includes(
+                        searchText
+                    )
+                );
+
+            }
+        );
+
+
+    displayOrders(
+        filteredOrders
+    );
+
+}
+
+
+// ==========================================
+// حذف البحث
+// ==========================================
+
+function clearSearch() {
+
+    const input =
+        document.getElementById(
+            "searchInput"
+        );
+
+
+    input.value =
+        "";
+
+
+    displayOrders(
+        allOrders
+    );
+
+
+    input.focus();
 
 }
 
@@ -1304,6 +1533,34 @@ document
 
 
 // ==========================================
+// البحث أثناء الكتابة
+// ==========================================
+
+document
+    .getElementById(
+        "searchInput"
+    )
+    .addEventListener(
+        "input",
+        searchOrders
+    );
+
+
+// ==========================================
+// زر مسح البحث
+// ==========================================
+
+document
+    .getElementById(
+        "clearSearchButton"
+    )
+    .addEventListener(
+        "click",
+        clearSearch
+    );
+
+
+// ==========================================
 // تشغيل لوحة الإدارة
 // ==========================================
 
@@ -1325,7 +1582,6 @@ async function startAdmin() {
 
 
 startAdmin();
-
 
 </script>
 
