@@ -106,6 +106,82 @@
             background: #008ed6;
         }
 
+
+        /* =====================================
+           الإحصائيات
+        ===================================== */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    5,
+                    1fr
+                );
+
+            gap: 15px;
+
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: #182631;
+
+            border: 1px solid #263746;
+
+            border-radius: 12px;
+
+            padding: 18px;
+
+            text-align: center;
+
+            box-shadow:
+                0 5px 15px
+                rgba(0, 0, 0, 0.18);
+        }
+
+        .stat-icon {
+            font-size: 28px;
+
+            margin-bottom: 8px;
+        }
+
+        .stat-number {
+            font-size: 25px;
+
+            font-weight: bold;
+
+            color: #00a8ff;
+
+            margin-bottom: 5px;
+        }
+
+        .stat-title {
+            color: #9fb0bd;
+
+            font-size: 14px;
+        }
+
+        .stat-new .stat-number {
+            color: #f1c40f;
+        }
+
+        .stat-completed .stat-number {
+            color: #2ecc71;
+        }
+
+        .stat-cancelled .stat-number {
+            color: #e63946;
+        }
+
+        .stat-sales .stat-number {
+            color: #00a8ff;
+
+            font-size: 21px;
+        }
+
+
         /* =====================================
            البحث
         ===================================== */
@@ -115,7 +191,7 @@
 
             gap: 10px;
 
-            margin-bottom: 25px;
+            margin-bottom: 15px;
 
             width: 100%;
         }
@@ -143,7 +219,12 @@
 
             box-shadow:
                 0 0 0 2px
-                rgba(0, 168, 255, 0.15);
+                rgba(
+                    0,
+                    168,
+                    255,
+                    0.15
+                );
         }
 
         #searchInput::placeholder {
@@ -176,8 +257,6 @@
             color: #8fa3b5;
 
             font-size: 14px;
-
-            margin-top: -15px;
 
             margin-bottom: 20px;
         }
@@ -237,6 +316,7 @@
             color: #00a8ff;
         }
 
+
         /* =====================================
            الحالة
         ===================================== */
@@ -268,6 +348,7 @@
 
             cursor: not-allowed;
         }
+
 
         /* =====================================
            معلومات الزبون
@@ -309,6 +390,7 @@
             word-break: break-word;
         }
 
+
         /* =====================================
            المنتجات
         ===================================== */
@@ -343,6 +425,7 @@
             font-size: 14px;
         }
 
+
         /* =====================================
            المجموع
         ===================================== */
@@ -361,6 +444,7 @@
 
             color: #00a8ff;
         }
+
 
         /* =====================================
            حذف
@@ -398,6 +482,7 @@
             cursor: not-allowed;
         }
 
+
         /* =====================================
            لا توجد نتائج
         ===================================== */
@@ -414,9 +499,27 @@
             color: #b8c5cf;
         }
 
+
         /* =====================================
            الهاتف
         ===================================== */
+
+        @media (max-width: 900px) {
+
+            .stats {
+                grid-template-columns:
+                    repeat(
+                        2,
+                        1fr
+                    );
+            }
+
+            .stat-sales {
+                grid-column:
+                    span 2;
+            }
+
+        }
 
         @media (max-width: 600px) {
 
@@ -466,6 +569,29 @@
                 padding: 12px;
             }
 
+            .stats {
+                grid-template-columns:
+                    repeat(
+                        2,
+                        1fr
+                    );
+
+                gap: 10px;
+            }
+
+            .stat-card {
+                padding: 14px;
+            }
+
+            .stat-number {
+                font-size: 22px;
+            }
+
+            .stat-sales {
+                grid-column:
+                    span 2;
+            }
+
         }
 
     </style>
@@ -501,6 +627,116 @@
         <button id="refreshButton">
             🔄 تحديث الطلبات
         </button>
+
+    </div>
+
+
+    <!-- =====================================
+         الإحصائيات
+    ====================================== -->
+
+    <div class="stats">
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                📦
+            </div>
+
+            <div
+                id="totalOrders"
+                class="stat-number"
+            >
+                0
+            </div>
+
+            <div class="stat-title">
+                إجمالي الطلبات
+            </div>
+
+        </div>
+
+
+        <div class="stat-card stat-new">
+
+            <div class="stat-icon">
+                🟡
+            </div>
+
+            <div
+                id="newOrders"
+                class="stat-number"
+            >
+                0
+            </div>
+
+            <div class="stat-title">
+                الطلبات الجديدة
+            </div>
+
+        </div>
+
+
+        <div class="stat-card stat-completed">
+
+            <div class="stat-icon">
+                🟢
+            </div>
+
+            <div
+                id="completedOrders"
+                class="stat-number"
+            >
+                0
+            </div>
+
+            <div class="stat-title">
+                الطلبات المكتملة
+            </div>
+
+        </div>
+
+
+        <div class="stat-card stat-cancelled">
+
+            <div class="stat-icon">
+                ❌
+            </div>
+
+            <div
+                id="cancelledOrders"
+                class="stat-number"
+            >
+                0
+            </div>
+
+            <div class="stat-title">
+                الطلبات الملغاة
+            </div>
+
+        </div>
+
+
+        <div class="stat-card stat-sales">
+
+            <div class="stat-icon">
+                💰
+            </div>
+
+            <div
+                id="totalSales"
+                class="stat-number"
+            >
+                0 دج
+            </div>
+
+            <div class="stat-title">
+                إجمالي المبيعات
+            </div>
+
+        </div>
+
 
     </div>
 
@@ -568,7 +804,7 @@ const supabaseClient =
 
 
 // ==========================================
-// تخزين جميع الطلبات
+// تخزين الطلبات
 // ==========================================
 
 let allOrders = [];
@@ -784,7 +1020,87 @@ async function updateOrderStatus(
 
 
 // ==========================================
-// تحميل الطلبات من Supabase
+// تحديث الإحصائيات
+// ==========================================
+
+function updateStatistics() {
+
+    const total =
+        allOrders.length;
+
+
+    const newOrders =
+        allOrders.filter(
+            order =>
+                order.status === "جديد"
+        ).length;
+
+
+    const completed =
+        allOrders.filter(
+            order =>
+                order.status === "مكتمل"
+        ).length;
+
+
+    const cancelled =
+        allOrders.filter(
+            order =>
+                order.status === "ملغى"
+        ).length;
+
+
+    const totalSales =
+        allOrders.reduce(
+            (sum, order) => {
+
+                return (
+                    sum +
+                    Number(
+                        order.total || 0
+                    )
+                );
+
+            },
+            0
+        );
+
+
+    document.getElementById(
+        "totalOrders"
+    ).textContent =
+        total.toLocaleString("ar-DZ");
+
+
+    document.getElementById(
+        "newOrders"
+    ).textContent =
+        newOrders.toLocaleString("ar-DZ");
+
+
+    document.getElementById(
+        "completedOrders"
+    ).textContent =
+        completed.toLocaleString("ar-DZ");
+
+
+    document.getElementById(
+        "cancelledOrders"
+    ).textContent =
+        cancelled.toLocaleString("ar-DZ");
+
+
+    document.getElementById(
+        "totalSales"
+    ).textContent =
+        totalSales.toLocaleString("ar-DZ")
+        + " دج";
+
+}
+
+
+// ==========================================
+// تحميل الطلبات
 // ==========================================
 
 async function loadOrders() {
@@ -846,6 +1162,9 @@ async function loadOrders() {
         data || [];
 
 
+    updateStatistics();
+
+
     message.style.display =
         "none";
 
@@ -881,10 +1200,6 @@ function displayOrders(
         "";
 
 
-    // ======================================
-    // عدد النتائج
-    // ======================================
-
     const searchInput =
         document.getElementById(
             "searchInput"
@@ -915,10 +1230,6 @@ function displayOrders(
     }
 
 
-    // ======================================
-    // لا توجد طلبات
-    // ======================================
-
     if (
         !orders ||
         orders.length === 0
@@ -942,20 +1253,11 @@ function displayOrders(
     }
 
 
-    // ======================================
-    // إنشاء البطاقات
-    // ======================================
-
     orders.forEach(order => {
-
 
         let productsHTML =
             "";
 
-
-        // ==================================
-        // المنتجات
-        // ==================================
 
         if (
             Array.isArray(
@@ -1045,10 +1347,6 @@ function displayOrders(
         }
 
 
-        // ==================================
-        // التاريخ
-        // ==================================
-
         let dateText =
             "غير معروف";
 
@@ -1065,10 +1363,6 @@ function displayOrders(
         }
 
 
-        // ==================================
-        // إنشاء البطاقة
-        // ==================================
-
         const card =
             document.createElement(
                 "div"
@@ -1078,10 +1372,6 @@ function displayOrders(
         card.className =
             "order-card";
 
-
-        // ==================================
-        // الرأس
-        // ==================================
 
         const header =
             document.createElement(
@@ -1127,10 +1417,6 @@ function displayOrders(
             header
         );
 
-
-        // ==================================
-        // باقي البطاقة
-        // ==================================
 
         card.insertAdjacentHTML(
             "beforeend",
@@ -1252,10 +1538,6 @@ function displayOrders(
         );
 
 
-        // ==================================
-        // زر الحذف
-        // ==================================
-
         const deleteButton =
             card.querySelector(
                 ".delete-button"
@@ -1302,7 +1584,6 @@ function searchOrders() {
             .toLowerCase();
 
 
-    // إذا كان البحث فارغًا
     if (searchText === "") {
 
         displayOrders(
@@ -1352,7 +1633,7 @@ function searchOrders() {
 
 
 // ==========================================
-// حذف البحث
+// مسح البحث
 // ==========================================
 
 function clearSearch() {
@@ -1547,7 +1828,7 @@ document
 
 
 // ==========================================
-// زر مسح البحث
+// مسح البحث
 // ==========================================
 
 document
