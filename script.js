@@ -1,36 +1,261 @@
 // ========================================
-// STYLE - نظام السلة الكامل
+// STYLE - نظام المتجر والسلة
+// 30 منتجًا
 // ========================================
 
 const products = [
+
+    // 👕 تيشيرتات
     {
         id: 1,
         name: "تيشيرت أسود كلاسيكي",
-        price: 2500,
+        price: 1800,
         type: "shirt",
         sizes: ["S", "M", "L", "XL"]
     },
+
     {
         id: 2,
-        name: "بنطال جينز عصري",
+        name: "تيشيرت أبيض Basic",
+        price: 1700,
+        type: "shirt",
+        sizes: ["S", "M", "L", "XL"]
+    },
+
+    {
+        id: 3,
+        name: "تيشيرت Oversize أسود",
+        price: 2200,
+        type: "shirt",
+        sizes: ["M", "L", "XL"]
+    },
+
+    {
+        id: 4,
+        name: "تيشيرت Oversize أبيض",
+        price: 2200,
+        type: "shirt",
+        sizes: ["M", "L", "XL"]
+    },
+
+    {
+        id: 5,
+        name: "تيشيرت رمادي Urban",
+        price: 2000,
+        type: "shirt",
+        sizes: ["S", "M", "L", "XL"]
+    },
+
+    {
+        id: 6,
+        name: "تيشيرت أزرق Navy",
+        price: 2100,
+        type: "shirt",
+        sizes: ["S", "M", "L", "XL"]
+    },
+
+    {
+        id: 7,
+        name: "تيشيرت Graphic أسود",
+        price: 2500,
+        type: "shirt",
+        sizes: ["M", "L", "XL"]
+    },
+
+    {
+        id: 8,
+        name: "تيشيرت Streetwear بيج",
+        price: 2400,
+        type: "shirt",
+        sizes: ["M", "L", "XL"]
+    },
+
+
+    // 👖 بناطيل
+    {
+        id: 9,
+        name: "بنطال Cargo أسود",
+        price: 4200,
+        type: "jeans",
+        sizes: ["30", "32", "34", "36"]
+    },
+
+    {
+        id: 10,
+        name: "بنطال Cargo بيج",
+        price: 4200,
+        type: "jeans",
+        sizes: ["30", "32", "34", "36"]
+    },
+
+    {
+        id: 11,
+        name: "بنطال Jeans أزرق",
         price: 4500,
+        type: "jeans",
+        sizes: ["30", "32", "34", "36"]
+    },
+
+    {
+        id: 12,
+        name: "بنطال Jeans أسود",
+        price: 4500,
+        type: "jeans",
+        sizes: ["30", "32", "34", "36"]
+    },
+
+    {
+        id: 13,
+        name: "بنطال Jogger رمادي",
+        price: 3500,
         type: "jeans",
         sizes: ["S", "M", "L", "XL"]
     },
+
     {
-        id: 3,
-        name: "جاكيت أسود فاخر",
-        price: 7500,
-        type: "jacket",
+        id: 14,
+        name: "بنطال Jogger أسود",
+        price: 3500,
+        type: "jeans",
         sizes: ["S", "M", "L", "XL"]
     },
+
     {
-        id: 4,
-        name: "حذاء رياضي",
+        id: 15,
+        name: "بنطال Wide Leg أسود",
+        price: 4800,
+        type: "jeans",
+        sizes: ["S", "M", "L", "XL"]
+    },
+
+
+    // 🧥 جاكيتات
+    {
+        id: 16,
+        name: "جاكيت Bomber أسود",
         price: 6500,
+        type: "jacket",
+        sizes: ["M", "L", "XL"]
+    },
+
+    {
+        id: 17,
+        name: "جاكيت Denim أزرق",
+        price: 7000,
+        type: "jacket",
+        sizes: ["M", "L", "XL"]
+    },
+
+    {
+        id: 18,
+        name: "جاكيت Puffer أسود",
+        price: 8500,
+        type: "jacket",
+        sizes: ["M", "L", "XL"]
+    },
+
+    {
+        id: 19,
+        name: "جاكيت Varsity أسود وأبيض",
+        price: 7500,
+        type: "jacket",
+        sizes: ["M", "L", "XL"]
+    },
+
+    {
+        id: 20,
+        name: "جاكيت Windbreaker رمادي",
+        price: 6000,
+        type: "jacket",
+        sizes: ["M", "L", "XL"]
+    },
+
+
+    // 🩳 شورتات
+    {
+        id: 21,
+        name: "شورت Cargo أسود",
+        price: 2800,
+        type: "shorts",
+        sizes: ["S", "M", "L", "XL"]
+    },
+
+    {
+        id: 22,
+        name: "شورت Cargo بيج",
+        price: 2800,
+        type: "shorts",
+        sizes: ["S", "M", "L", "XL"]
+    },
+
+    {
+        id: 23,
+        name: "شورت رياضي رمادي",
+        price: 2200,
+        type: "shorts",
+        sizes: ["S", "M", "L", "XL"]
+    },
+
+    {
+        id: 24,
+        name: "شورت Denim أزرق",
+        price: 3000,
+        type: "shorts",
+        sizes: ["S", "M", "L", "XL"]
+    },
+
+
+    // 👟 أحذية
+    {
+        id: 25,
+        name: "حذاء Street أسود",
+        price: 7500,
         type: "shoe",
-        sizes: ["39", "40", "41", "42"]
+        sizes: ["40", "41", "42", "43", "44"]
+    },
+
+    {
+        id: 26,
+        name: "حذاء Casual أبيض",
+        price: 8000,
+        type: "shoe",
+        sizes: ["40", "41", "42", "43", "44"]
+    },
+
+    {
+        id: 27,
+        name: "حذاء Sport رمادي",
+        price: 8500,
+        type: "shoe",
+        sizes: ["40", "41", "42", "43", "44"]
+    },
+
+
+    // 🧢 إكسسوارات
+    {
+        id: 28,
+        name: "قبعة Baseball سوداء",
+        price: 1800,
+        type: "cap",
+        sizes: ["مقاس موحد"]
+    },
+
+    {
+        id: 29,
+        name: "حقيبة Crossbody سوداء",
+        price: 2500,
+        type: "bag",
+        sizes: ["مقاس موحد"]
+    },
+
+    {
+        id: 30,
+        name: "حقيبة ظهر Urban",
+        price: 4000,
+        type: "bag",
+        sizes: ["مقاس موحد"]
     }
+
 ];
 
 
@@ -48,7 +273,9 @@ let cart = JSON.parse(
 // ========================================
 
 function money(number) {
+
     return Number(number).toLocaleString("fr-FR") + " دج";
+
 }
 
 
@@ -57,10 +284,12 @@ function money(number) {
 // ========================================
 
 function saveCart() {
+
     localStorage.setItem(
         "style_cart",
         JSON.stringify(cart)
     );
+
 }
 
 
@@ -70,16 +299,22 @@ function saveCart() {
 
 function renderProducts() {
 
-    const grid = document.getElementById("products");
+    const grid =
+        document.getElementById("products");
 
     if (!grid) {
         return;
     }
 
+
     grid.innerHTML = products.map(function(product) {
 
         return `
-            <article class="product" data-id="${product.id}">
+
+            <article
+                class="product"
+                data-id="${product.id}"
+            >
 
                 <div class="visual">
 
@@ -87,30 +322,38 @@ function renderProducts() {
 
                 </div>
 
+
                 <div class="info">
 
-                    <h3>${product.name}</h3>
+                    <h3>
+                        ${product.name}
+                    </h3>
+
 
                     <div class="price">
                         ${money(product.price)}
                     </div>
+
 
                     <div class="sizes">
 
                         ${product.sizes.map(function(size) {
 
                             return `
+
                                 <button
                                     type="button"
                                     data-size="${size}"
                                 >
                                     ${size}
                                 </button>
+
                             `;
 
                         }).join("")}
 
                     </div>
+
 
                     <button
                         type="button"
@@ -122,118 +365,157 @@ function renderProducts() {
                 </div>
 
             </article>
+
         `;
 
     }).join("");
 
 
     // ========================================
-    // أحداث المقاسات
+    // أحداث المنتجات
     // ========================================
 
     document
         .querySelectorAll(".product")
         .forEach(function(card) {
 
+
             const sizeButtons =
                 card.querySelectorAll(".sizes button");
 
+
+            // اختيار المقاس
             sizeButtons.forEach(function(button) {
 
-                button.addEventListener("click", function(event) {
+                button.addEventListener(
+                    "click",
+                    function(event) {
 
-                    event.preventDefault();
-                    event.stopPropagation();
+                        event.preventDefault();
+                        event.stopPropagation();
 
-                    sizeButtons.forEach(function(btn) {
-                        btn.classList.remove("selected");
-                    });
 
-                    button.classList.add("selected");
+                        sizeButtons.forEach(
+                            function(btn) {
 
-                });
+                                btn.classList.remove(
+                                    "selected"
+                                );
+
+                            }
+                        );
+
+
+                        button.classList.add(
+                            "selected"
+                        );
+
+                    }
+                );
 
             });
 
 
             // ========================================
-            // زر إضافة للسلة
+            // إضافة للسلة
             // ========================================
 
             const addButton =
                 card.querySelector(".add");
 
-            addButton.addEventListener("click", function(event) {
 
-                event.preventDefault();
-                event.stopPropagation();
+            addButton.addEventListener(
+                "click",
+                function(event) {
 
-                const productId =
-                    Number(card.dataset.id);
-
-                const product =
-                    products.find(function(item) {
-                        return item.id === productId;
-                    });
-
-                const selectedSize =
-                    card.querySelector(".sizes button.selected");
+                    event.preventDefault();
+                    event.stopPropagation();
 
 
-                if (!selectedSize) {
-
-                    alert("⚠️ اختر المقاس أولاً");
-
-                    return;
-                }
+                    const productId =
+                        Number(card.dataset.id);
 
 
-                const size =
-                    selectedSize.dataset.size;
+                    const product =
+                        products.find(
+                            function(item) {
 
+                                return item.id === productId;
 
-                // نفس المنتج + نفس المقاس
-                const existing =
-                    cart.find(function(item) {
-
-                        return (
-                            item.id === product.id &&
-                            item.size === size
+                            }
                         );
 
-                    });
+
+                    if (!product) {
+                        return;
+                    }
 
 
-                if (existing) {
+                    const selectedSize =
+                        card.querySelector(
+                            ".sizes button.selected"
+                        );
 
-                    existing.qty += 1;
 
-                } else {
+                    if (!selectedSize) {
 
-                    cart.push({
+                        alert(
+                            "⚠️ اختر المقاس أولاً"
+                        );
 
-                        id: product.id,
+                        return;
+                    }
 
-                        name: product.name,
 
-                        price: product.price,
+                    const size =
+                        selectedSize.dataset.size;
 
-                        size: size,
 
-                        qty: 1
+                    // نفس المنتج + نفس المقاس
+                    const existing =
+                        cart.find(
+                            function(item) {
 
-                    });
+                                return (
+                                    item.id === product.id &&
+                                    item.size === size
+                                );
+
+                            }
+                        );
+
+
+                    if (existing) {
+
+                        existing.qty += 1;
+
+                    } else {
+
+                        cart.push({
+
+                            id: product.id,
+
+                            name: product.name,
+
+                            price: product.price,
+
+                            size: size,
+
+                            qty: 1
+
+                        });
+
+                    }
+
+
+                    saveCart();
+
+                    renderCart();
+
+                    openCart();
 
                 }
-
-
-                saveCart();
-
-                renderCart();
-
-                openCart();
-
-            });
+            );
 
         });
 
@@ -249,193 +531,260 @@ function renderCart() {
     const items =
         document.getElementById("items");
 
+
     const count =
         document.getElementById("count");
+
 
     const totalElement =
         document.getElementById("total");
 
 
-    if (!items || !count || !totalElement) {
+    if (
+        !items ||
+        !count ||
+        !totalElement
+    ) {
+
         return;
+
     }
 
 
     let total = 0;
+
     let quantity = 0;
 
+
+    // ========================================
+    // السلة فارغة
+    // ========================================
 
     if (cart.length === 0) {
 
         items.innerHTML = `
+
             <div class="empty">
-                🛒<br>
+
+                🛒
+                <br>
+
                 السلة فارغة
+
             </div>
+
         `;
+
 
         count.textContent = "0";
 
         totalElement.textContent = "0 دج";
 
         return;
+
     }
 
 
-    items.innerHTML = cart.map(function(item, index) {
+    // ========================================
+    // المنتجات داخل السلة
+    // ========================================
 
-        const itemQuantity =
-            Number(item.qty) || 1;
-
-        const itemPrice =
-            Number(item.price) || 0;
-
-        const itemTotal =
-            itemPrice * itemQuantity;
+    items.innerHTML =
+        cart.map(function(item, index) {
 
 
-        total += itemTotal;
+            const itemQuantity =
+                Number(item.qty) || 1;
 
-        quantity += itemQuantity;
+
+            const itemPrice =
+                Number(item.price) || 0;
 
 
-        return `
-            <div class="cartItem">
+            const itemTotal =
+                itemPrice * itemQuantity;
 
-                <div class="cartItemTop">
 
-                    <h4>
-                        ${item.name}
-                    </h4>
+            total += itemTotal;
 
-                    <button
-                        type="button"
-                        class="remove"
-                        data-remove="${index}"
-                    >
-                        حذف
-                    </button>
+            quantity += itemQuantity;
+
+
+            return `
+
+                <div class="cartItem">
+
+                    <div class="cartItemTop">
+
+                        <h4>
+                            ${item.name}
+                        </h4>
+
+
+                        <button
+                            type="button"
+                            class="remove"
+                            data-remove="${index}"
+                        >
+                            حذف
+                        </button>
+
+                    </div>
+
+
+                    <p>
+                        المقاس: ${item.size}
+                    </p>
+
+
+                    <p>
+                        السعر: ${money(item.price)}
+                    </p>
+
+
+                    <div class="qty">
+
+                        <button
+                            type="button"
+                            data-minus="${index}"
+                        >
+                            −
+                        </button>
+
+
+                        <b>
+                            ${itemQuantity}
+                        </b>
+
+
+                        <button
+                            type="button"
+                            data-plus="${index}"
+                        >
+                            +
+                        </button>
+
+                    </div>
 
                 </div>
 
-                <p>
-                    المقاس: ${item.size}
-                </p>
+            `;
 
-                <p>
-                    السعر: ${money(item.price)}
-                </p>
+        }).join("");
 
-                <div class="qty">
 
-                    <button
-                        type="button"
-                        data-minus="${index}"
-                    >
-                        −
-                    </button>
-
-                    <b>
-                        ${itemQuantity}
-                    </b>
-
-                    <button
-                        type="button"
-                        data-plus="${index}"
-                    >
-                        +
-                    </button>
-
-                </div>
-
-            </div>
-        `;
-
-    }).join("");
-
+    // ========================================
+    // تحديث العدد والمجموع
+    // ========================================
 
     count.textContent =
         quantity;
+
 
     totalElement.textContent =
         money(total);
 
 
+    // ========================================
     // حذف
+    // ========================================
+
     items
         .querySelectorAll("[data-remove]")
         .forEach(function(button) {
 
-            button.addEventListener("click", function() {
+            button.addEventListener(
+                "click",
+                function() {
 
-                const index =
-                    Number(button.dataset.remove);
+                    const index =
+                        Number(button.dataset.remove);
 
-                cart.splice(index, 1);
 
-                saveCart();
+                    cart.splice(index, 1);
 
-                renderCart();
 
-            });
+                    saveCart();
+
+                    renderCart();
+
+                }
+            );
 
         });
 
 
+    // ========================================
     // زيادة
+    // ========================================
+
     items
         .querySelectorAll("[data-plus]")
         .forEach(function(button) {
 
-            button.addEventListener("click", function() {
+            button.addEventListener(
+                "click",
+                function() {
 
-                const index =
-                    Number(button.dataset.plus);
+                    const index =
+                        Number(button.dataset.plus);
 
-                if (!cart[index]) {
-                    return;
+
+                    if (!cart[index]) {
+                        return;
+                    }
+
+
+                    cart[index].qty += 1;
+
+
+                    saveCart();
+
+                    renderCart();
+
                 }
-
-                cart[index].qty += 1;
-
-                saveCart();
-
-                renderCart();
-
-            });
+            );
 
         });
 
 
+    // ========================================
     // نقصان
+    // ========================================
+
     items
         .querySelectorAll("[data-minus]")
         .forEach(function(button) {
 
-            button.addEventListener("click", function() {
+            button.addEventListener(
+                "click",
+                function() {
 
-                const index =
-                    Number(button.dataset.minus);
+                    const index =
+                        Number(button.dataset.minus);
 
-                if (!cart[index]) {
-                    return;
+
+                    if (!cart[index]) {
+                        return;
+                    }
+
+
+                    cart[index].qty -= 1;
+
+
+                    if (cart[index].qty <= 0) {
+
+                        cart.splice(index, 1);
+
+                    }
+
+
+                    saveCart();
+
+                    renderCart();
+
                 }
-
-                cart[index].qty -= 1;
-
-
-                if (cart[index].qty <= 0) {
-
-                    cart.splice(index, 1);
-
-                }
-
-
-                saveCart();
-
-                renderCart();
-
-            });
+            );
 
         });
 
@@ -451,16 +800,22 @@ function openCart() {
     const cartElement =
         document.getElementById("cart");
 
+
     const shade =
         document.getElementById("shade");
 
 
     if (cartElement) {
+
         cartElement.classList.add("on");
+
     }
 
+
     if (shade) {
+
         shade.classList.add("on");
+
     }
 
 }
@@ -475,23 +830,29 @@ function closeCart() {
     const cartElement =
         document.getElementById("cart");
 
+
     const shade =
         document.getElementById("shade");
 
 
     if (cartElement) {
+
         cartElement.classList.remove("on");
+
     }
 
+
     if (shade) {
+
         shade.classList.remove("on");
+
     }
 
 }
 
 
 // ========================================
-// الذهاب للدفع
+// إتمام الطلب
 // ========================================
 
 function goToCheckout() {
@@ -503,10 +864,10 @@ function goToCheckout() {
         );
 
         return;
+
     }
 
 
-    // نتأكد أن السلة محفوظة
     saveCart();
 
 
@@ -524,6 +885,7 @@ document.addEventListener(
     "DOMContentLoaded",
     function() {
 
+
         renderProducts();
 
         renderCart();
@@ -532,11 +894,14 @@ document.addEventListener(
         const cartOpen =
             document.getElementById("cartOpen");
 
+
         const cartClose =
             document.getElementById("cartClose");
 
+
         const shade =
             document.getElementById("shade");
+
 
         const checkout =
             document.getElementById("checkout");
