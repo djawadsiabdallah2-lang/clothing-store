@@ -106,7 +106,6 @@
             background: #008ed6;
         }
 
-
         /* =====================================
            الإحصائيات
         ===================================== */
@@ -180,7 +179,6 @@
 
             font-size: 21px;
         }
-
 
         /* =====================================
            البحث
@@ -316,7 +314,6 @@
             color: #00a8ff;
         }
 
-
         /* =====================================
            الحالة
         ===================================== */
@@ -348,7 +345,6 @@
 
             cursor: not-allowed;
         }
-
 
         /* =====================================
            معلومات الزبون
@@ -390,7 +386,6 @@
             word-break: break-word;
         }
 
-
         /* =====================================
            المنتجات
         ===================================== */
@@ -425,7 +420,6 @@
             font-size: 14px;
         }
 
-
         /* =====================================
            المجموع
         ===================================== */
@@ -444,7 +438,6 @@
 
             color: #00a8ff;
         }
-
 
         /* =====================================
            حذف
@@ -482,7 +475,6 @@
             cursor: not-allowed;
         }
 
-
         /* =====================================
            لا توجد نتائج
         ===================================== */
@@ -498,7 +490,6 @@
 
             color: #b8c5cf;
         }
-
 
         /* =====================================
            الهاتف
@@ -598,9 +589,7 @@
 
 </head>
 
-
 <body>
-
 
 <header>
 
@@ -614,9 +603,7 @@
 
 </header>
 
-
 <main class="container">
-
 
     <div class="top-bar">
 
@@ -630,13 +617,11 @@
 
     </div>
 
-
     <!-- =====================================
          الإحصائيات
     ====================================== -->
 
     <div class="stats">
-
 
         <div class="stat-card">
 
@@ -657,7 +642,6 @@
 
         </div>
 
-
         <div class="stat-card stat-new">
 
             <div class="stat-icon">
@@ -676,7 +660,6 @@
             </div>
 
         </div>
-
 
         <div class="stat-card stat-completed">
 
@@ -697,7 +680,6 @@
 
         </div>
 
-
         <div class="stat-card stat-cancelled">
 
             <div class="stat-icon">
@@ -716,7 +698,6 @@
             </div>
 
         </div>
-
 
         <div class="stat-card stat-sales">
 
@@ -737,9 +718,7 @@
 
         </div>
 
-
     </div>
-
 
     <!-- =====================================
          البحث
@@ -760,29 +739,23 @@
 
     </div>
 
-
     <div
         id="searchResult"
         style="display: none;"
     ></div>
 
-
     <div id="message">
         جاري تحميل الطلبات...
     </div>
-
 
     <div
         id="ordersContainer"
         class="orders"
     ></div>
 
-
 </main>
 
-
 <script>
-
 
 // ==========================================
 // إعداد Supabase
@@ -791,10 +764,8 @@
 const SUPABASE_URL =
     "https://asnuclplpvvozslziqjc.supabase.co";
 
-
 const SUPABASE_ANON_KEY =
     "sb_publishable_dRKgnlRt6KzMOaeZV8e6Gg_Txxa5OZV";
-
 
 const supabaseClient =
     window.supabase.createClient(
@@ -802,13 +773,11 @@ const supabaseClient =
         SUPABASE_ANON_KEY
     );
 
-
 // ==========================================
 // تخزين الطلبات
 // ==========================================
 
 let allOrders = [];
-
 
 // ==========================================
 // التحقق من تسجيل الدخول
@@ -823,7 +792,6 @@ async function checkUser() {
     } =
         await supabaseClient.auth.getSession();
 
-
     if (!session) {
 
         window.location.href =
@@ -832,10 +800,8 @@ async function checkUser() {
         return false;
     }
 
-
     return true;
 }
-
 
 // ==========================================
 // الحالات
@@ -870,7 +836,6 @@ const statusOptions = [
 
 ];
 
-
 // ==========================================
 // إنشاء قائمة الحالة
 // ==========================================
@@ -880,28 +845,22 @@ function createStatusSelect(order) {
     const select =
         document.createElement("select");
 
-
     select.className =
         "status-select";
 
-
     select.dataset.id =
         order.id;
-
 
     statusOptions.forEach(status => {
 
         const option =
             document.createElement("option");
 
-
         option.value =
             status.value;
 
-
         option.textContent =
             status.label;
-
 
         if (
             status.value ===
@@ -912,11 +871,9 @@ function createStatusSelect(order) {
 
         }
 
-
         select.appendChild(option);
 
     });
-
 
     select.addEventListener(
         "change",
@@ -930,10 +887,8 @@ function createStatusSelect(order) {
         }
     );
 
-
     return select;
 }
-
 
 // ==========================================
 // تحديث حالة الطلب
@@ -947,12 +902,10 @@ async function updateOrderStatus(
     const newStatus =
         select.value;
 
-
     const selectedText =
         select.options[
             select.selectedIndex
         ].textContent;
-
 
     const confirmed =
         confirm(
@@ -963,7 +916,6 @@ async function updateOrderStatus(
             + " ؟"
         );
 
-
     if (!confirmed) {
 
         await loadOrders();
@@ -971,9 +923,7 @@ async function updateOrderStatus(
         return;
     }
 
-
     select.disabled = true;
-
 
     const {
         error
@@ -988,23 +938,19 @@ async function updateOrderStatus(
                 orderId
             );
 
-
     if (error) {
 
         console.error(error);
-
 
         alert(
             "❌ فشل تحديث حالة الطلب:\n"
             + error.message
         );
 
-
         await loadOrders();
 
         return;
     }
-
 
     alert(
         "✅ تم تحديث حالة الطلب #"
@@ -1013,11 +959,9 @@ async function updateOrderStatus(
         + selectedText
     );
 
-
     await loadOrders();
 
 }
-
 
 // ==========================================
 // تحديث الإحصائيات
@@ -1028,13 +972,11 @@ function updateStatistics() {
     const total =
         allOrders.length;
 
-
     const newOrders =
         allOrders.filter(
             order =>
                 order.status === "جديد"
         ).length;
-
 
     const completed =
         allOrders.filter(
@@ -1042,53 +984,56 @@ function updateStatistics() {
                 order.status === "مكتمل"
         ).length;
 
-
     const cancelled =
         allOrders.filter(
             order =>
                 order.status === "ملغى"
         ).length;
 
+    // ==========================================
+    // إجمالي المبيعات
+    // المكتمل فقط
+    // ==========================================
 
     const totalSales =
-        allOrders.reduce(
-            (sum, order) => {
+        allOrders
+            .filter(
+                order =>
+                    order.status === "مكتمل"
+            )
+            .reduce(
+                (sum, order) => {
 
-                return (
-                    sum +
-                    Number(
-                        order.total || 0
-                    )
-                );
+                    return (
+                        sum +
+                        Number(
+                            order.total || 0
+                        )
+                    );
 
-            },
-            0
-        );
-
+                },
+                0
+            );
 
     document.getElementById(
         "totalOrders"
     ).textContent =
         total.toLocaleString("ar-DZ");
 
-
     document.getElementById(
         "newOrders"
     ).textContent =
         newOrders.toLocaleString("ar-DZ");
-
 
     document.getElementById(
         "completedOrders"
     ).textContent =
         completed.toLocaleString("ar-DZ");
 
-
     document.getElementById(
         "cancelledOrders"
     ).textContent =
         cancelled.toLocaleString("ar-DZ");
-
 
     document.getElementById(
         "totalSales"
@@ -1097,7 +1042,6 @@ function updateStatistics() {
         + " دج";
 
 }
-
 
 // ==========================================
 // تحميل الطلبات
@@ -1110,24 +1054,19 @@ async function loadOrders() {
             "message"
         );
 
-
     const container =
         document.getElementById(
             "ordersContainer"
         );
 
-
     message.style.display =
         "block";
-
 
     message.textContent =
         "جاري تحميل الطلبات...";
 
-
     container.innerHTML =
         "";
-
 
     const {
         data,
@@ -1143,38 +1082,30 @@ async function loadOrders() {
                 }
             );
 
-
     if (error) {
 
         console.error(error);
-
 
         message.textContent =
             "❌ حدث خطأ أثناء تحميل الطلبات: "
             + error.message;
 
-
         return;
     }
-
 
     allOrders =
         data || [];
 
-
     updateStatistics();
-
 
     message.style.display =
         "none";
-
 
     displayOrders(
         allOrders
     );
 
 }
-
 
 // ==========================================
 // عرض الطلبات
@@ -1189,33 +1120,27 @@ function displayOrders(
             "ordersContainer"
         );
 
-
     const searchResult =
         document.getElementById(
             "searchResult"
         );
 
-
     container.innerHTML =
         "";
-
 
     const searchInput =
         document.getElementById(
             "searchInput"
         );
 
-
     const searchText =
         searchInput.value
             .trim();
-
 
     if (searchText !== "") {
 
         searchResult.style.display =
             "block";
-
 
         searchResult.textContent =
             "🔎 تم العثور على "
@@ -1228,7 +1153,6 @@ function displayOrders(
             "none";
 
     }
-
 
     if (
         !orders ||
@@ -1252,12 +1176,10 @@ function displayOrders(
         return;
     }
 
-
     orders.forEach(order => {
 
         let productsHTML =
             "";
-
 
         if (
             Array.isArray(
@@ -1273,22 +1195,18 @@ function displayOrders(
                         item.title ||
                         "منتج";
 
-
                     const quantity =
                         item.quantity ||
                         item.qty ||
                         1;
 
-
                     const size =
                         item.size ||
                         "غير محدد";
 
-
                     const price =
                         item.price ||
                         0;
-
 
                     productsHTML += `
 
@@ -1346,10 +1264,8 @@ function displayOrders(
 
         }
 
-
         let dateText =
             "غير معروف";
-
 
         if (order.created_at) {
 
@@ -1362,61 +1278,49 @@ function displayOrders(
 
         }
 
-
         const card =
             document.createElement(
                 "div"
             );
 
-
         card.className =
             "order-card";
-
 
         const header =
             document.createElement(
                 "div"
             );
 
-
         header.className =
             "order-header";
-
 
         const orderId =
             document.createElement(
                 "div"
             );
 
-
         orderId.className =
             "order-id";
 
-
         orderId.textContent =
             "الطلب #" + order.id;
-
 
         const statusSelect =
             createStatusSelect(
                 order
             );
 
-
         header.appendChild(
             orderId
         );
-
 
         header.appendChild(
             statusSelect
         );
 
-
         card.appendChild(
             header
         );
-
 
         card.insertAdjacentHTML(
             "beforeend",
@@ -1439,7 +1343,6 @@ function displayOrders(
 
                 </div>
 
-
                 <div class="info-box">
 
                     <div class="info-title">
@@ -1454,7 +1357,6 @@ function displayOrders(
                     </div>
 
                 </div>
-
 
                 <div class="info-box">
 
@@ -1471,7 +1373,6 @@ function displayOrders(
 
                 </div>
 
-
                 <div class="info-box">
 
                     <div class="info-title">
@@ -1487,7 +1388,6 @@ function displayOrders(
 
                 </div>
 
-
                 <div class="info-box">
 
                     <div class="info-title">
@@ -1502,14 +1402,11 @@ function displayOrders(
 
             </div>
 
-
             <div class="products-title">
                 🛍️ المنتجات
             </div>
 
-
             ${productsHTML}
-
 
             <div class="total">
 
@@ -1525,7 +1422,6 @@ function displayOrders(
 
             </div>
 
-
             <button
                 class="delete-button"
             >
@@ -1537,12 +1433,10 @@ function displayOrders(
             `
         );
 
-
         const deleteButton =
             card.querySelector(
                 ".delete-button"
             );
-
 
         deleteButton.addEventListener(
             "click",
@@ -1556,7 +1450,6 @@ function displayOrders(
             }
         );
 
-
         container.appendChild(
             card
         );
@@ -1564,7 +1457,6 @@ function displayOrders(
     });
 
 }
-
 
 // ==========================================
 // البحث
@@ -1577,12 +1469,10 @@ function searchOrders() {
             "searchInput"
         );
 
-
     const searchText =
         input.value
             .trim()
             .toLowerCase();
-
 
     if (searchText === "") {
 
@@ -1592,7 +1482,6 @@ function searchOrders() {
 
         return;
     }
-
 
     const filteredOrders =
         allOrders.filter(
@@ -1604,13 +1493,11 @@ function searchOrders() {
                         ""
                     ).toLowerCase();
 
-
                 const phone =
                     String(
                         order.phone ||
                         ""
                     ).toLowerCase();
-
 
                 return (
                     name.includes(
@@ -1624,13 +1511,11 @@ function searchOrders() {
             }
         );
 
-
     displayOrders(
         filteredOrders
     );
 
 }
-
 
 // ==========================================
 // مسح البحث
@@ -1643,20 +1528,16 @@ function clearSearch() {
             "searchInput"
         );
 
-
     input.value =
         "";
-
 
     displayOrders(
         allOrders
     );
 
-
     input.focus();
 
 }
-
 
 // ==========================================
 // حذف الطلب
@@ -1675,20 +1556,16 @@ async function deleteOrder(
             + "سيتم حذف الطلب نهائيًا."
         );
 
-
     if (!confirmed) {
 
         return;
     }
 
-
     button.disabled =
         true;
 
-
     button.textContent =
         "⏳ جاري حذف الطلب...";
-
 
     const {
         error
@@ -1701,29 +1578,23 @@ async function deleteOrder(
                 orderId
             );
 
-
     if (error) {
 
         console.error(error);
-
 
         alert(
             "❌ فشل حذف الطلب:\n"
             + error.message
         );
 
-
         button.disabled =
             false;
-
 
         button.textContent =
             "🗑️ حذف الطلب";
 
-
         return;
     }
-
 
     alert(
         "✅ تم حذف الطلب #"
@@ -1731,11 +1602,9 @@ async function deleteOrder(
         + " بنجاح."
     );
 
-
     await loadOrders();
 
 }
-
 
 // ==========================================
 // حماية النصوص
@@ -1774,7 +1643,6 @@ function escapeHTML(
 
 }
 
-
 // ==========================================
 // تسجيل الخروج
 // ==========================================
@@ -1791,13 +1659,11 @@ document
                 .auth
                 .signOut();
 
-
             window.location.href =
                 "admin-login.html";
 
         }
     );
-
 
 // ==========================================
 // تحديث الطلبات
@@ -1812,7 +1678,6 @@ document
         loadOrders
     );
 
-
 // ==========================================
 // البحث أثناء الكتابة
 // ==========================================
@@ -1825,7 +1690,6 @@ document
         "input",
         searchOrders
     );
-
 
 // ==========================================
 // مسح البحث
@@ -1840,7 +1704,6 @@ document
         clearSearch
     );
 
-
 // ==========================================
 // تشغيل لوحة الإدارة
 // ==========================================
@@ -1850,17 +1713,14 @@ async function startAdmin() {
     const loggedIn =
         await checkUser();
 
-
     if (!loggedIn) {
 
         return;
     }
 
-
     await loadOrders();
 
 }
-
 
 startAdmin();
 
@@ -1869,3 +1729,4 @@ startAdmin();
 </body>
 
 </html>
+
