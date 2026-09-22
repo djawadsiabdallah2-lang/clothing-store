@@ -1,9 +1,5 @@
 // ========================================
-// STYLE — نظام المتجر + Supabase
-// ========================================
-
-// ========================================
-// إعداد Supabase
+// STYLE — المتجر + Supabase
 // ========================================
 
 const SUPABASE_URL =
@@ -21,7 +17,6 @@ const supabaseClient =
 
 // ========================================
 // المنتجات
-// سيتم جلبها من Supabase
 // ========================================
 
 let products = [];
@@ -41,9 +36,7 @@ let cart = JSON.parse(
 // ========================================
 
 function money(number) {
-
     return Number(number).toLocaleString("fr-FR") + " دج";
-
 }
 
 
@@ -62,7 +55,7 @@ function saveCart() {
 
 
 // ========================================
-// جلب المنتجات من Supabase
+// تحميل المنتجات من Supabase
 // ========================================
 
 async function loadProducts() {
@@ -73,7 +66,6 @@ async function loadProducts() {
     if (!grid) {
         return;
     }
-
 
     grid.innerHTML = `
         <div class="loading">
@@ -94,16 +86,15 @@ async function loadProducts() {
     if (error) {
 
         console.error(
-            "Supabase products error:",
+            "Supabase Error:",
             error
         );
-
 
         grid.innerHTML = `
             <div class="loading">
                 حدث خطأ أثناء تحميل المنتجات.
                 <br>
-                حاول تحديث الصفحة.
+                افتح Console لمعرفة الخطأ.
             </div>
         `;
 
@@ -112,7 +103,6 @@ async function loadProducts() {
 
 
     products = data || [];
-
 
     renderProducts();
 
@@ -148,22 +138,28 @@ function renderProducts() {
     grid.innerHTML =
         products.map(function(product) {
 
-            // التأكد أن sizes مصفوفة
-            let sizes = product.sizes;
+
+            // --------------------------------
+            // المقاسات
+            // PostgreSQL ARRAY يصل كمصفوفة
+            // --------------------------------
+
+            let sizes = product.sizes || [];
+
 
             if (!Array.isArray(sizes)) {
 
-                try {
-
-                    sizes = JSON.parse(sizes);
-
-                } catch {
-
-                    sizes = [];
-
-                }
+                sizes = [];
 
             }
+
+
+            // --------------------------------
+            // نوع المنتج
+            // --------------------------------
+
+            const type =
+                product.type || "shirt";
 
 
             return `
@@ -175,7 +171,7 @@ function renderProducts() {
                     <div class="visual">
 
                         <div
-                            class="shape ${product.type || "shirt"}"
+                            class="shape ${type}"
                         ></div>
 
                     </div>
@@ -196,18 +192,20 @@ function renderProducts() {
                         <div class="sizes">
 
                             ${
-                                sizes.map(function(size) {
+                                sizes.map(
+                                    function(size) {
 
-                                    return `
-                                        <button
-                                            type="button"
-                                            data-size="${size}"
-                                        >
-                                            ${size}
-                                        </button>
-                                    `;
+                                        return `
+                                            <button
+                                                type="button"
+                                                data-size="${size}"
+                                            >
+                                                ${size}
+                                            </button>
+                                        `;
 
-                                }).join("")
+                                    }
+                                ).join("")
                             }
 
                         </div>
@@ -244,9 +242,9 @@ function setupProductEvents() {
         .forEach(function(card) {
 
 
-            // -----------------------------
+            // =================================
             // المقاسات
-            // -----------------------------
+            // =================================
 
             const sizeButtons =
                 card.querySelectorAll(
@@ -254,40 +252,42 @@ function setupProductEvents() {
                 );
 
 
-            sizeButtons.forEach(function(button) {
+            sizeButtons.forEach(
+                function(button) {
 
-                button.addEventListener(
-                    "click",
-                    function(event) {
+                    button.addEventListener(
+                        "click",
+                        function(event) {
 
-                        event.preventDefault();
-                        event.stopPropagation();
-
-
-                        sizeButtons.forEach(
-                            function(btn) {
-
-                                btn.classList.remove(
-                                    "selected"
-                                );
-
-                            }
-                        );
+                            event.preventDefault();
+                            event.stopPropagation();
 
 
-                        button.classList.add(
-                            "selected"
-                        );
+                            sizeButtons.forEach(
+                                function(btn) {
 
-                    }
-                );
+                                    btn.classList.remove(
+                                        "selected"
+                                    );
 
-            });
+                                }
+                            );
 
 
-            // -----------------------------
-            // إضافة للسلة
-            // -----------------------------
+                            button.classList.add(
+                                "selected"
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+
+            // =================================
+            // إضافة إلى السلة
+            // =================================
 
             const addButton =
                 card.querySelector(".add");
@@ -307,17 +307,17 @@ function setupProductEvents() {
 
 
                     const productId =
-                        Number(card.dataset.id);
+                        Number(
+                            card.dataset.id
+                        );
 
 
                     const product =
                         products.find(
                             function(item) {
 
-                                return (
-                                    Number(item.id) ===
-                                    productId
-                                );
+                                return Number(item.id) ===
+                                    productId;
 
                             }
                         );
@@ -353,7 +353,6 @@ function setupProductEvents() {
                         selectedSize.dataset.size;
 
 
-                    // نفس المنتج + نفس المقاس
                     const existing =
                         cart.find(
                             function(item) {
@@ -381,7 +380,9 @@ function setupProductEvents() {
 
                             name: product.name,
 
-                            price: Number(product.price),
+                            price: Number(
+                                product.price
+                            ),
 
                             size: size,
 
@@ -429,7 +430,6 @@ function renderCart() {
     ) {
 
         return;
-
     }
 
 
@@ -468,13 +468,13 @@ function renderCart() {
                     Number(item.price) || 0;
 
 
-                const itemTotal =
-                    itemPrice * itemQuantity;
+                total +=
+                    itemPrice *
+                    itemQuantity;
 
 
-                total += itemTotal;
-
-                quantity += itemQuantity;
+                quantity +=
+                    itemQuantity;
 
 
                 return `
@@ -485,7 +485,6 @@ function renderCart() {
                             <h4>
                                 ${item.name}
                             </h4>
-
 
                             <button
                                 type="button"
@@ -499,7 +498,8 @@ function renderCart() {
 
 
                         <p>
-                            المقاس: ${item.size}
+                            المقاس:
+                            ${item.size}
                         </p>
 
 
@@ -727,7 +727,7 @@ function closeCart() {
 
 
 // ========================================
-// الذهاب إلى Checkout
+// Checkout
 // ========================================
 
 function goToCheckout() {
@@ -760,36 +760,30 @@ document.addEventListener(
     async function() {
 
 
-        // جلب المنتجات من Supabase
         await loadProducts();
 
 
-        // عرض السلة
         renderCart();
 
 
-        // زر فتح السلة
         const cartOpen =
             document.getElementById(
                 "cartOpen"
             );
 
 
-        // زر إغلاق السلة
         const cartClose =
             document.getElementById(
                 "cartClose"
             );
 
 
-        // الخلفية
         const shade =
             document.getElementById(
                 "shade"
             );
 
 
-        // إتمام الطلب
         const checkout =
             document.getElementById(
                 "checkout"
@@ -837,4 +831,3 @@ document.addEventListener(
 
     }
 );
-
